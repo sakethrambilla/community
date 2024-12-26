@@ -27,7 +27,7 @@ export default function MainNavbar() {
 
   useGSAP(() => {
     const tl = gsap.timeline();
-    tl.set(mobileMenuRef.current, { y: -1000 });
+    tl.set(mobileMenuRef.current, { y: -2000 });
     if (isOpen) {
       tl.to(mobileMenuRef.current, {
         y: 0,
@@ -35,7 +35,7 @@ export default function MainNavbar() {
       });
     } else {
       tl.to(mobileMenuRef.current, {
-        y: -1000,
+        y: -2000,
         duration: 1,
       });
     }
