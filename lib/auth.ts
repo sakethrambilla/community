@@ -18,6 +18,9 @@ export const authOptions: AuthOptions = {
     }),
   ],
   adapter: PrismaAdapter(prisma) as Adapter,
+  session: {
+    strategy: "jwt",
+  },
   callbacks: {
     jwt({ token, user }) {
       if (user) token.role = user.role;
