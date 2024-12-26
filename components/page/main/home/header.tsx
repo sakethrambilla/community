@@ -8,8 +8,8 @@ export default function Header() {
   const { theme } = useTheme();
   console.log("Theme", theme);
   return (
-    <div className="flex flex-col  items-start justify-start h-screen gap-4 w-full px-8 py-40">
-      <h1 className="text-6xl font-nippo font-bold text-start  group">
+    <section className="flex flex-col  items-start justify-start h-full min-h-screen gap-4 w-full px-8 py-40">
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-nippo font-bold text-start  group">
         Join the{" "}
         <span className="group-hover:text-secondary transition-all duration-500 group-hover:dark:text-primary">
           {" Community "}
@@ -24,21 +24,24 @@ export default function Header() {
         </span>
       </h1>
 
-      <p className="text-xl w-2/3 font-nippo font-normal text-gray-500">
+      <p className="lg:text-xl  lg:w-2/3 font-nippo font-normal text-gray-500">
         Unlock the tools, knowledge, and network to excel in software
         development. Gain access to curated courses, valuable resources, and
         exclusive coding challenges designed to elevate your skills.
       </p>
-      <div className="flex flex-col gap-4 w-fit items-start justify-center">
-        <div className="flex items-center justify-start gap-4">
-          <Button size={"lg"} className="   flex items-center gap-2">
+      <div className="flex flex-col  gap-4 w-full lg:w-fit items-start justify-center">
+        <div className="flex flex-col w-full md:flex-row items-start lg:items-center justify-start gap-4">
+          <Button
+            size={"lg"}
+            className=" w-full md:w-fit   flex items-center gap-2"
+          >
             <ChartNoAxesCombined />
             Career growth starts here
           </Button>
           <Button
             size={"lg"}
             variant={"outline"}
-            className=" transition-all duration-500 "
+            className=" transition-all w-full md:w-fit duration-500 "
           >
             <CirclePlay />
             See how it works
@@ -48,6 +51,6 @@ export default function Header() {
           <ShieldCheck /> No Payment Required
         </p>
       </div>
-    </div>
+    </section>
   );
 }

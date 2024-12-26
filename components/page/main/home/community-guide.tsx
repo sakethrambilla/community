@@ -31,18 +31,18 @@ const guide = [
 ];
 export default function CommunityGuide() {
   return (
-    <div className="w-full flex-col gap-24 h-full min-h-screen flex items-center justify-center px-24">
+    <section className="w-full flex-col gap-24 h-full min-h-screen flex items-center justify-center px-8 lg:px-24">
       <div className="flex flex-col w-full items-start justify-start gap-4">
         <h4>Community Guide</h4>
-        <h1 className="text-5xl w-3/4  font-semibold font-nippo">
+        <h1 className="text-4xl md:text-6xl  font-semibold font-nippo">
           Unlock Your Potential: A Guide to Engaging with Our Community
         </h1>
       </div>
-      <div className="flex items-start gap-12">
+      <div className="flex flex-col lg:flex-row items-start gap-12">
         {guide.map((item, index) => (
           <div
             key={index}
-            className="flex flex-col items-start justify-start gap-4"
+            className="flex flex-col items-start justify-start gap-2 lg:gap-4"
           >
             <Image
               src={item.image}
@@ -60,6 +60,6 @@ export default function CommunityGuide() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

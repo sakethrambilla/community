@@ -39,13 +39,13 @@ const updates = [
 
 export default function CommunityUpdates() {
   return (
-    <div className="w-full min-h-screen items-start flex gap-12 flex-col justify-center  px-24">
+    <section className="w-full min-h-screen h-full py-40 items-start flex gap-12 flex-col justify-center  px-8 lg:px-24">
       <div className="flex flex-col w-full items-start justify-start gap-4">
         <h4>Stay Informed,Stay Ahead</h4>
-        <h1 className="text-6xl  font-semibold font-nippo">
+        <h1 className=" text-4xl md:text-6xl  font-semibold font-nippo">
           Latest Community Updates
         </h1>
-        <p className="w-2/3">
+        <p className="lg:w-2/3">
           Stay up-to-date with the latest courses, projects, tutorials,
           articles, and community activities, all in one place!
         </p>
@@ -53,7 +53,7 @@ export default function CommunityUpdates() {
           <Button>View All</Button>
         </div>
       </div>
-      <div className="flex items-start justify-center gap-8 w-full overflow-hidden">
+      <div className="flex flex-col lg:flex-row items-start justify-center gap-8 w-full overflow-hidden">
         {updates.map((update, index) => (
           <div
             key={index}
@@ -74,6 +74,6 @@ export default function CommunityUpdates() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

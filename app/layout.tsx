@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
+import SessionProvider from "@/components/provider/session-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,14 +48,16 @@ export default function RootLayout({
       <body
         className={`${trap.className} ${nippo.variable} ${styrofoam.variable} ${geistSans.variable} ${geistMono.variable} ${aktura.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );
