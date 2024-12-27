@@ -35,7 +35,7 @@ import { useSession } from "next-auth/react";
 const items = [
   {
     icon: Users,
-    url: "/dashboard/community",
+    url: "/dashboard",
   },
   {
     icon: BookOpen,
@@ -69,7 +69,7 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="sticky left-0 top-0 flex h-screen flex-col items-center justify-between p-4 lg:p-8">
+    <div className="sticky left-0 top-0 flex h-screen flex-col items-center justify-between px-1 py-4 md:px-4 md:py-8 lg:p-8">
       <div className="flex flex-col items-center justify-start gap-8 lg:gap-24">
         {/* Logo */}
         <div className="flex items-center justify-center rounded-full bg-sidebar-primary p-4 text-sidebar-primary-foreground">
@@ -123,7 +123,7 @@ export default function UserDashboard() {
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="ml-24 w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+            className="ml-20 w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg lg:ml-24"
             align="end"
             sideOffset={4}
           >

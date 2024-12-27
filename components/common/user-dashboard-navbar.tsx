@@ -36,7 +36,9 @@ export default function UserDashboardNavbar() {
             <Bell className="size-10 rounded-full bg-secondary p-3 text-primary lg:size-14" />
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent></DropdownMenuContent>
+          <DropdownMenuContent>
+            <div className="h-32 w-32 bg-red-500"></div>
+          </DropdownMenuContent>
         </DropdownMenu>
       </div>
     </div>
