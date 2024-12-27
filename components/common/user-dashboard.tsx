@@ -69,11 +69,11 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="flex h-screen flex-col items-center justify-between p-4 lg:p-8">
+    <div className="sticky left-0 top-0 flex h-screen flex-col items-center justify-between p-4 lg:p-8">
       <div className="flex flex-col items-center justify-start gap-8 lg:gap-24">
         {/* Logo */}
         <div className="flex items-center justify-center rounded-full bg-sidebar-primary p-4 text-sidebar-primary-foreground">
-          <GalleryVerticalEnd className="size-3 lg:size-6" />
+          <GalleryVerticalEnd className="size-4 lg:size-6" />
         </div>
 
         {/* Items */}
@@ -87,7 +87,7 @@ export default function UserDashboard() {
               )}
               key={index}
             >
-              <item.icon className="size-3 lg:size-6" />
+              <item.icon className="size-4 lg:size-6" />
             </Link>
           ))}
         </div>
@@ -101,20 +101,20 @@ export default function UserDashboard() {
           onClick={handleThemeChange}
         >
           {theme === "dark" ? (
-            <Sun className="size-3 lg:size-6" />
+            <Sun className="size-4 lg:size-6" />
           ) : (
-            <Moon className="size-3 lg:size-6" />
+            <Moon className="size-4 lg:size-6" />
           )}
         </div>
         {/* Logout */}
         <div className="flex items-center justify-center rounded-full p-4">
-          <LogOut className="size-3 lg:size-6" />
+          <LogOut className="size-4 lg:size-6" />
         </div>
 
         {/* User */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Avatar className="size-10 rounded-full lg:size-12">
+            <Avatar className="size-12 rounded-full lg:size-14">
               <AvatarImage
                 src={session?.user?.image || "https://github.com/shadcn.png"}
                 alt={session?.user?.name ?? "CSRB"}
