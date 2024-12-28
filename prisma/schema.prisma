@@ -14,8 +14,26 @@ model User {
   emailVerified DateTime?
   role          String          @default("user")
   image         String?
+  userDetail   UserDetail?  
   accounts      Account[]
   sessions      Session[]
+  posts         Post[]
+  comments      Comment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserDetail {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  phoneNumber String
+  profession String
+  resume String?
+  linkedin String?
+  github String?
+  twitter String?
+  youtube String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -57,4 +75,41 @@ model VerificationToken {
   expires    DateTime
  
   @@id([identifier, token])
+}
+
+model PostCategory {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  image String
+  pinned Boolean @default(false)
+  categoryId String
+  category   PostCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  likes     Int      @default(0)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  likes     Int      @default(0)
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 import SessionProvider from "@/components/provider/session-provider";
+import StateProvider from "@/components/provider/state-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,14 +50,16 @@ export default function RootLayout({
         className={`${trap.className} ${nippo.variable} ${styrofoam.variable} ${geistSans.variable} ${geistMono.variable} ${aktura.variable} antialiased`}
       >
         <SessionProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
+          <StateProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </StateProvider>
         </SessionProvider>
       </body>
     </html>
