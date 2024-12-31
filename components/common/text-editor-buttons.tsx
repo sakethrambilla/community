@@ -9,6 +9,7 @@ import {
   Italic,
   List,
   ListOrdered,
+  Paperclip,
   Strikethrough,
   UnderlineIcon,
   YoutubeIcon,
@@ -22,7 +23,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Editor } from "@tiptap/react";
+import FileUpload from "./file-upload";
 export const TextEditorButtons = ({ editor }: { editor: Editor }) => {
+  const [fileUploadOpen, setFileUploadOpen] = useState(false);
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [youtubePopoverOpen, setYoutubePopoverOpen] = useState(false);
 
@@ -76,6 +79,23 @@ export const TextEditorButtons = ({ editor }: { editor: Editor }) => {
       </Toggle>
       <Separator orientation="vertical" className="h-8 w-[1px]" />
 
+      {/* File Upload */}
+      <Dialog open={fileUploadOpen} onOpenChange={setFileUploadOpen}>
+        <DialogTrigger asChild>
+          <Toggle>
+            <Paperclip className="h-4 w-4" />
+          </Toggle>
+        </DialogTrigger>
+        <DialogContent className="flex w-[80vw] flex-col gap-4 rounded-lg lg:w-full">
+          <DialogHeader>
+            <DialogTitle>Add Link</DialogTitle>
+            <DialogDescription>
+              Add a Youtube video link to your post.
+            </DialogDescription>
+          </DialogHeader>
+          <FileUpload onClose={() => setFileUploadOpen(false)} />
+        </DialogContent>
+      </Dialog>
       <Dialog open={youtubePopoverOpen} onOpenChange={setYoutubePopoverOpen}>
         <DialogTrigger asChild>
           <Toggle>

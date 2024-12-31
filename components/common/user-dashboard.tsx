@@ -70,7 +70,7 @@ export default function UserDashboard() {
 
   return (
     <div className="sticky left-0 top-0 flex h-screen flex-col items-center justify-between px-1 py-4 md:px-4 md:py-8 lg:p-8">
-      <div className="flex flex-col items-center justify-start gap-8 lg:gap-24">
+      <div className="flex flex-col items-center justify-start gap-8 lg:gap-8 2xl:gap-24">
         {/* Logo */}
         <div className="flex items-center justify-center rounded-full bg-sidebar-primary p-4 text-sidebar-primary-foreground">
           <GalleryVerticalEnd className="size-4 lg:size-6" />
@@ -94,7 +94,7 @@ export default function UserDashboard() {
       </div>
 
       {/* Footer */}
-      <div className="flex flex-col items-center justify-center gap-2 rounded-full bg-secondary">
+      <div className="flex flex-col items-center justify-center gap-1 rounded-full bg-secondary">
         {/* Theme */}
         <div
           className="flex items-center justify-center rounded-full p-4"

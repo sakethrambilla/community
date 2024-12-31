@@ -55,10 +55,14 @@ export default function AddPost() {
     },
   });
 
-  function onSubmit(data: CreatePostSchema) {
-    console.log(data);
-    const res = createPost(data).unwrap();
-    console.log(res);
+  async function onSubmit(data: CreatePostSchema) {
+    try {
+      console.log("On Submit", data);
+      const res = await createPost(data).unwrap();
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const editor = useEditor({
@@ -103,9 +107,9 @@ export default function AddPost() {
     }
   }, [session]);
 
-  console.log("Post Form Category", form.watch("categoryId"));
+  // console.log("Post Form Category", form.watch("categoryId"));
   // console.log("Post Form Content", form.watch("content"));
-  // console.log("Post Form Errors", form.formState.errors);
+  console.log("Post Form Errors", form.formState.errors);
 
   if (!editor) return null;
   return (
@@ -211,7 +215,7 @@ export default function AddPost() {
                   />
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button>{"Add Post"}</Button>
+                  <Button type="submit">{"Add Post"}</Button>
                   <Button
                     variant={"outline"}
                     type="button"

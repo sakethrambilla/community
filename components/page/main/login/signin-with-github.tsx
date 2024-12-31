@@ -11,10 +11,10 @@ export default function SignInWithGithub() {
       onClick={() => {
         signIn("github", { callbackUrl: "/dashboard" });
       }}
-      className="flex w-1/2 items-center justify-center gap-2 rounded-lg border border-muted py-6 lg:py-7 lg:text-xl"
+      className="flex w-1/2 items-center justify-center gap-2 rounded-lg border border-muted py-6 lg:py-7 lg:text-lg xl:text-xl"
     >
       <FaGithub
-        className="min-h-[12px] min-w-[12px] lg:min-h-[24px] lg:min-w-[24px]"
+        className="min-h-[12px] min-w-[12px] lg:min-h-[20px] lg:min-w-[20px] xl:min-h-[24px] xl:min-w-[24px]"
         size={24}
       />
       Github

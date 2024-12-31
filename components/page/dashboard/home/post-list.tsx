@@ -5,6 +5,7 @@ import PostCard from "./post-card";
 
 export default function PostList() {
   const { data: postData } = useGetPostsQuery();
+  console.log("POst List", postData);
   return (
     <div className="flex flex-col gap-4">
       {postData?.map((post) => <PostCard post={post} key={post.id} />)}
