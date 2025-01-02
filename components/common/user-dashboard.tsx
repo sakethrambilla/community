@@ -1,36 +1,35 @@
 "use client";
 import { cn } from "@/lib/utils";
 import {
-  GalleryVerticalEnd,
-  Users,
-  BookOpen,
-  MessageCircleQuestion,
-  Lightbulb,
-  Code,
-  Brain,
-  LogOut,
-  Moon,
-  Sun,
-  Sparkles,
   BadgeCheck,
-  CreditCard,
   Bell,
+  BookOpen,
+  Brain,
+  Code,
+  CreditCard,
+  GalleryVerticalEnd,
+  Lightbulb,
+  LogOut,
+  MessageCircleQuestion,
+  Moon,
+  Sparkles,
+  Sun,
+  Users,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
-import React from "react";
+import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuTrigger,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuGroup,
+  DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Avatar, AvatarImage, AvatarFallback } from "../ui/avatar";
-import { useSession } from "next-auth/react";
 
 const items = [
   {
@@ -132,7 +131,7 @@ export default function UserDashboard() {
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
                     src={
-                      session?.user?.image ?? "https://github.com/shadcn.png"
+                      session?.user?.image || "https://github.com/shadcn.png"
                     }
                     alt={session?.user?.name ?? "CSRB"}
                   />

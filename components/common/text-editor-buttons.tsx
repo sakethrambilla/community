@@ -1,9 +1,18 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { Toggle } from "@/components/ui/toggle";
+import { Editor } from "@tiptap/react";
 import {
   Bold,
   Italic,
@@ -14,16 +23,7 @@ import {
   UnderlineIcon,
   YoutubeIcon,
 } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Editor } from "@tiptap/react";
-import FileUpload from "./file-upload";
+// import FileUpload from "./file-upload";
 export const TextEditorButtons = ({ editor }: { editor: Editor }) => {
   const [fileUploadOpen, setFileUploadOpen] = useState(false);
   const [youtubeUrl, setYoutubeUrl] = useState("");
@@ -88,14 +88,14 @@ export const TextEditorButtons = ({ editor }: { editor: Editor }) => {
         </DialogTrigger>
         <DialogContent className="flex w-[80vw] flex-col gap-4 rounded-lg lg:w-full">
           <DialogHeader>
-            <DialogTitle>Add Link</DialogTitle>
-            <DialogDescription>
-              Add a Youtube video link to your post.
-            </DialogDescription>
+            <DialogTitle>Attach File</DialogTitle>
+            <DialogDescription>Attach a file to your post.</DialogDescription>
           </DialogHeader>
-          <FileUpload onClose={() => setFileUploadOpen(false)} />
+          {/* <FileUpload onClose={() => setFileUploadOpen(false)} /> */}
         </DialogContent>
       </Dialog>
+
+      {/* Youtube */}
       <Dialog open={youtubePopoverOpen} onOpenChange={setYoutubePopoverOpen}>
         <DialogTrigger asChild>
           <Toggle>

@@ -1,21 +1,15 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
+import { TextEditorButtons } from "@/components/common/text-editor-buttons";
+import { Button } from "@/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { useCreatePostMutation } from "@/redux/post/api";
-import { createPostSchema } from "@/schema";
-import { CreatePostSchema } from "@/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -25,7 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useGetPostCategoryQuery } from "@/redux/post-category/apit";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -33,18 +27,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
+import { useGetPostCategoryQuery } from "@/redux/post-category/apit";
+import { useCreatePostMutation } from "@/redux/post/api";
+import { createPostSchema, CreatePostSchema } from "@/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
+import Youtube from "@tiptap/extension-youtube";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Link from "@tiptap/extension-link";
-import Youtube from "@tiptap/extension-youtube";
-import { TextEditorButtons } from "@/components/common/text-editor-buttons";
+import { useForm } from "react-hook-form";
 
 export default function AddPost() {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const { data: postCategory } = useGetPostCategoryQuery();
-  const [createPost] = useCreatePostMutation();
+  const [createPost, { isSuccess }] = useCreatePostMutation();
 
   const form = useForm<CreatePostSchema>({
     resolver: zodResolver(createPostSchema),
@@ -59,6 +58,10 @@ export default function AddPost() {
     try {
       console.log("On Submit", data);
       const res = await createPost(data).unwrap();
+      if (isSuccess) {
+        console.log("Post Created Successfully");
+        setOpen(false);
+      }
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -105,11 +108,11 @@ export default function AddPost() {
     if (session?.user?.id) {
       form.setValue("userId", session?.user?.id);
     }
-  }, [session]);
+  }, [session, form]);
 
   // console.log("Post Form Category", form.watch("categoryId"));
-  // console.log("Post Form Content", form.watch("content"));
-  console.log("Post Form Errors", form.formState.errors);
+  // console.log("Post Form User ID", form.watch("userId"));
+  // console.log("Post Form Errors", form.formState.errors);
 
   if (!editor) return null;
   return (

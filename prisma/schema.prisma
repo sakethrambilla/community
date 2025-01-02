@@ -90,7 +90,7 @@ model Post {
   id        String   @id @default(cuid())
   title     String
   content   String
-  image String
+  status    String   @default("PENDING")
   pinned Boolean @default(false)
   categoryId String
   category   PostCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -112,4 +112,11 @@ model Comment {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+
+enum Status {
+  PENDING
+  ACCEPTED
+  REJECTED
 }

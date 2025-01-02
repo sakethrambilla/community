@@ -5,8 +5,29 @@ import { z } from "zod";
 
 export async function GET() {
   try {
-    const posts = await prisma.post.findMany();
-    return NextResponse.json(posts);
+    const posts = await prisma.post.findMany({
+      include: {
+        user: true,
+        category: true,
+        comments: true,
+      },
+    });
+
+    const transformedPosts = posts.map((post) => ({
+      ...post,
+      comments: post.comments.length,
+      category: post.category.name,
+      categoryId: post.category.id,
+      user: {
+        id: post.user.id,
+        name: post.user.name,
+        email: post.user.email,
+        image: post.user.image,
+        // profession: post.user.profession,
+        // linkedin: post.user.linkedin,
+      },
+    }));
+    return NextResponse.json(transformedPosts);
   } catch (error) {
     console.log(error);
     return NextResponse.json(
@@ -19,10 +40,33 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const validatedBody = createPostSchema.parse(body);
-    const post = await prisma.post.create({ data: validatedBody });
+    console.log("Post Post body", body);
+    const { title, content, userId, categoryId } = createPostSchema.parse(body);
+
+    if (!userId) {
+      return NextResponse.json(
+        { messsage: " Userd Id is required" },
+        { status: 404 },
+      );
+    }
+
+    const post = await prisma.post.create({
+      data: {
+        title,
+        content,
+        user: {
+          connect: { id: userId },
+        },
+        category: {
+          connect: {
+            id: categoryId,
+          },
+        },
+      },
+    });
     return NextResponse.json(post);
   } catch (error) {
+    console.log("Error", error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { message: "Invalid request body" },
