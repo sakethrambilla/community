@@ -2,38 +2,37 @@
 import { Button } from "@/components/ui/button";
 import { ChartNoAxesCombined, CirclePlay, ShieldCheck } from "lucide-react";
 import { useTheme } from "next-themes";
-import React from "react";
 
 export default function Header() {
   const { theme } = useTheme();
   console.log("Theme", theme);
   return (
-    <section className="flex flex-col  items-start justify-start h-full min-h-screen gap-4 w-full px-8 py-40">
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-nippo font-bold text-start  group">
+    <section className="flex h-full min-h-screen w-full flex-col items-start justify-start gap-4 px-8 py-40">
+      <h1 className="group text-start font-nippo text-4xl font-bold md:text-5xl lg:text-6xl">
         Join the{" "}
-        <span className="group-hover:text-secondary transition-all duration-500 group-hover:dark:text-primary">
+        <span className="transition-all duration-500 group-hover:text-primary group-hover:dark:text-primary">
           {" Community "}
         </span>
         and Kickstart Your{" "}
-        <span className="group-hover:text-secondary transition-all duration-500 group-hover:dark:text-primary">
+        <span className="transition-all duration-500 group-hover:text-primary group-hover:dark:text-primary">
           {" Software "}
         </span>{" "}
         Journey Alongside{" "}
-        <span className="group-hover:text-secondary transition-all duration-500 group-hover:dark:text-primary">
+        <span className="transition-all duration-500 group-hover:text-primary group-hover:dark:text-primary">
           {" Like-Minded Peers "}
         </span>
       </h1>
 
-      <p className="lg:text-xl  lg:w-2/3 font-nippo font-normal text-gray-500">
+      <p className="font-nippo font-normal text-gray-500 lg:w-2/3 lg:text-xl">
         Unlock the tools, knowledge, and network to excel in software
         development. Gain access to curated courses, valuable resources, and
         exclusive coding challenges designed to elevate your skills.
       </p>
-      <div className="flex flex-col  gap-4 w-full lg:w-fit items-start justify-center">
-        <div className="flex flex-col w-full md:flex-row items-start lg:items-center justify-start gap-4">
+      <div className="flex w-full flex-col items-start justify-center gap-4 lg:w-fit">
+        <div className="flex w-full flex-col items-start justify-start gap-4 md:flex-row lg:items-center">
           <Button
             size={"lg"}
-            className=" w-full md:w-fit   flex items-center gap-2"
+            className="flex w-full items-center gap-2 md:w-fit"
           >
             <ChartNoAxesCombined />
             Career growth starts here
@@ -41,13 +40,13 @@ export default function Header() {
           <Button
             size={"lg"}
             variant={"outline"}
-            className=" transition-all w-full md:w-fit duration-500 "
+            className="w-full transition-all duration-500 md:w-fit"
           >
             <CirclePlay />
             See how it works
           </Button>
         </div>
-        <p className="flex items-center hover:text-custom_green transition-all duration-500 justify-center w-full gap-2">
+        <p className="flex w-full items-center justify-center gap-2 transition-all duration-500 hover:text-custom_green">
           <ShieldCheck /> No Payment Required
         </p>
       </div>

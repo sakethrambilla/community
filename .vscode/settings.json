@@ -1,0 +1,108 @@
+{
+    "editor.suggestSelection": "first",
+    "editor.cursorBlinking": "smooth",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "better-comments.multilineComments": true,
+    "eslint.enable": true,
+    "eslint.format.enable": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "workbench.iconTheme": "material-icon-theme",
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    },
+    "explorer.confirmDragAndDrop": false,
+    "bracketPairColorizer.depreciation-notice": false,
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "gitlens.codeLens.authors.enabled": false,
+    "gitlens.codeLens.recentChange.enabled": false,
+    "gitlens.hovers.avatars": false,
+    "gitlens.hovers.enabled": false,
+    "bracket-pair-colorizer-2.depreciation-notice": false,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": true,
+        "markdown": true,
+        "scminput": false,
+        "yaml": true,
+        "javascript": true
+    },
+    "liveServer.settings.donotShowInfoMsg": true,
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true,
+        "**/.ammonite": true
+    },
+    "explorer.confirmDelete": false,
+    "editor.renderWhitespace": "all",
+    "terminal.integrated.scrollback": 10000,
+    "security.workspace.trust.untrustedFiles": "open",
+    "editor.guides.bracketPairs": true,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "terminal.integrated.fontFamily": "Source Code Pro for Powerline",
+    "terminal.integrated.fontSize": 18,
+    "editor.inlineSuggest.enabled": true,
+    "[python]": {
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "ms-python.python",
+        "editor.formatOnSave": true
+    },
+    "python.formatting.autopep8Path": "",
+    "python.formatting.provider": "black",
+    "terminal.integrated.env.osx": {},
+    "git.autofetch": true,
+    "files.autoSave": "onFocusChange",
+    "svg.preview.autoShow": true,
+    "git.confirmSync": false,
+    "notebook.codeActionsOnSave": {
+        "source.organizeImports": true
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.fixAll.tslint": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "eslint.alwaysShowStatus": true,
+    "explorer.compactFolders": false,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "svg.preview.mode": "svg",
+    "editor.formatOnType": true,
+    "githubPullRequests.pullBranch": "never",
+    "cSpell.userWords": [
+        "leaderboard"
+    ],
+    "console-ninja.featureSet": "Community",
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "tabnine.experimentalAutoImports": true,
+    "window.zoomLevel": 1,
+    "diffEditor.experimental.showMoves": true,
+    "github.copilot.editor.enableAutoCompletions": true,
+    "color-highlight.markerType": "dot-before",
+    "scm.showHistoryGraph": false,
+    "git.ignoreRebaseWarning": true,
+    "cursor.cpp.disabledLanguages": [
+        "scminput"
+    ],
+    "workbench.activityBar.orientation": "vertical",
+    "workbench.preferredDarkColorTheme": "Default Dark Modern",
+    "workbench.preferredLightColorTheme": "Default Light Modern",
+    "workbench.colorTheme": "Default Dark Modern"
+}
