@@ -1,4 +1,5 @@
+export * from "./baseSchema";
+export * from "./comment";
 export * from "./email";
 export * from "./post";
-export * from "./comment";
-export * from "./baseSchema";
+export * from "./user-details";

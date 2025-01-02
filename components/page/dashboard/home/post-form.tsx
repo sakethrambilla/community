@@ -118,7 +118,7 @@ export default function AddPost() {
   return (
     <div
       className={cn(
-        "flex h-fit w-full justify-start gap-4 rounded-lg border px-4 py-2 md:max-w-[80vw] lg:rounded-2xl lg:px-8 lg:py-6",
+        "flex h-fit w-full justify-start gap-4 rounded-lg border px-4 py-2 lg:rounded-2xl lg:px-8 lg:py-6",
         open ? "items-start" : "items-center",
       )}
     >
