@@ -6,7 +6,7 @@ import PostCard from "./post-card";
 
 export default function PostList() {
   const { data: postData, isLoading } = useGetPostsQuery();
-  console.log("POst List", postData);
+  // console.log("POst List", postData);
   return (
     <div className="flex w-full flex-col gap-4">
       {isLoading && (

@@ -56,7 +56,7 @@
     "editor.guides.bracketPairs": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "terminal.integrated.fontFamily": "Source Code Pro for Powerline",
-    "terminal.integrated.fontSize": 18,
+    "terminal.integrated.fontSize": 12,
     "editor.inlineSuggest.enabled": true,
     "[python]": {
         "editor.formatOnType": true,
