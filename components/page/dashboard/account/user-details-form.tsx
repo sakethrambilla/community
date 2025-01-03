@@ -130,7 +130,7 @@ export default function UserDetailsForm() {
                       {...getRootProps()}
                       className="flex w-full max-w-[30vw] flex-col items-center justify-center gap-4 rounded-2xl border-2 border-dashed p-4"
                     >
-                      <CloudUploadIcon className="h-8 w-8" />
+                      <CloudUploadIcon className="h-8 w-8 text-muted-foreground" />
                       <input {...getInputProps()} />
                       <p className="w-2/3 text-center text-sm text-muted-foreground">
                         <span className="cursor-pointer font-bold underline">
