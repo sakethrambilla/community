@@ -1,5 +1,6 @@
 "use client";
 
+import { Skeleton } from "@/components/ui/skeleton";
 import { useGetPostsQuery } from "@/redux/post/api";
 import { CircleArrowLeft, CircleArrowRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
@@ -42,11 +43,15 @@ export default function PostCardViewer() {
   return (
     <div className="flex h-full w-full flex-row items-center gap-4">
       <CircleArrowLeft
-        className="size-4 lg:size-6"
+        className="size-4 cursor-pointer lg:size-6"
         onClick={handlePreviousPost}
       />
+      {isLoading && <Skeleton className="h-48 w-full rounded-2xl" />}
       <PostCard post={postData?.[activePostIndex]} />
-      <CircleArrowRight className="size-4 lg:size-6" onClick={handleNextPost} />
+      <CircleArrowRight
+        className="size-4 cursor-pointer lg:size-6"
+        onClick={handleNextPost}
+      />
     </div>
   );
 }

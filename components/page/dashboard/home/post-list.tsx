@@ -5,14 +5,18 @@ import { useGetPostsQuery } from "@/redux/post/api";
 import { useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { htmlToText } from "@/lib/utils";
 import { Post } from "@/types/post";
+import { DialogTitle } from "@radix-ui/react-dialog";
 import { format } from "date-fns";
 import { MessageSquare, ThumbsUp } from "lucide-react";
+import PostCard from "./post-card";
 
 export default function PostList() {
   const { data: postData, isLoading } = useGetPostsQuery();
-  const [postId, setPostId] = useState<string>("");
+  const [activePost, setActivePost] = useState<Post | undefined>(undefined);
+  const [open, setOpen] = useState(false);
   // console.log("POst List", postData);
   return (
     <div className="flex w-full flex-col gap-4">
@@ -23,8 +27,20 @@ export default function PostList() {
           ))}
         </div>
       )}
-      {postData?.map((post) => (
-        <PostListCard post={post} key={post.id} setPostId={setPostId} />
+      {postData?.map((post, index) => (
+        <Drawer key={index} open={open} onOpenChange={setOpen}>
+          <DrawerTrigger>
+            <PostListCard
+              post={post}
+              key={post.id}
+              setActivePost={setActivePost}
+            />
+          </DrawerTrigger>
+          <DrawerContent className="h-[80vh]">
+            <DialogTitle></DialogTitle>
+            <PostCard post={activePost} />
+          </DrawerContent>
+        </Drawer>
       ))}
     </div>
   );
@@ -32,12 +48,12 @@ export default function PostList() {
 
 interface PostCardProps {
   post: Post;
-  setPostId: (id: string) => void;
+  setActivePost: (post: Post) => void;
 }
 
-function PostListCard({ post, setPostId }: PostCardProps) {
+function PostListCard({ post, setActivePost }: PostCardProps) {
   function handlePostClick() {
-    setPostId(post.id);
+    setActivePost(post);
   }
   return (
     <div
@@ -58,7 +74,7 @@ function PostListCard({ post, setPostId }: PostCardProps) {
           <p className="text-sm text-muted-foreground">{post.category}</p>
         </div>
       </div>
-      <div className="flex w-full flex-col gap-0">
+      <div className="flex w-full flex-col items-start gap-0">
         <div className="text-2xl">{post.title}</div>
         <p
           dangerouslySetInnerHTML={{
