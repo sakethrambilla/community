@@ -8,7 +8,7 @@ interface PostCardProps {
 export default function PostCard({ post }: PostCardProps) {
   if (!post) return null;
   return (
-    <div className="flex h-full min-h-[600px] w-full flex-col gap-8 rounded-2xl border-2 p-8">
+    <div className="flex h-full min-h-[600px] w-full flex-col gap-8 rounded-2xl p-8">
       {/* User Info
       <div className="flex w-fit items-center justify-start gap-2">
         <Avatar>

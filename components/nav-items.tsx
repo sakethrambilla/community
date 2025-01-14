@@ -11,7 +11,6 @@ import {
 
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -19,8 +18,8 @@ import {
 
 const items = [
   {
-    name: "Community",
-    url: "/dashboard/community",
+    name: "Community Post",
+    url: "/admin/post",
     icon: Users,
   },
   {
@@ -53,7 +52,6 @@ const items = [
 export function NavItems() {
   return (
     <SidebarGroup className="">
-      <SidebarGroupLabel className="text-lg">Main Menu</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>

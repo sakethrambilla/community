@@ -1,7 +1,7 @@
 "use client";
 
-import * as React from "react";
 import { GalleryVerticalEnd } from "lucide-react";
+import * as React from "react";
 
 import { NavUser } from "@/components/nav-user";
 import {
@@ -10,8 +10,8 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuItem,
   SidebarMenuButton,
+  SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { NavItems } from "./nav-items";
@@ -30,7 +30,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <GalleryVerticalEnd className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">{"CSRB"}</span>
+                <span className="truncate font-semibold">
+                  {"Admin  Dashboard"}
+                </span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
