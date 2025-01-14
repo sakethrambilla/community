@@ -3,13 +3,21 @@ import { createPostSchema, deleteSchema } from "@/schema";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
     const posts = await prisma.post.findMany({
       include: {
         user: true,
         category: true,
         comments: true,
+      },
+      where: {
+        id: id ? id : undefined,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 

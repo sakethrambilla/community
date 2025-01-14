@@ -16,7 +16,7 @@ import {
   Sun,
   Users,
 } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -63,9 +63,13 @@ export default function UserDashboardSidebar() {
   const { theme, setTheme } = useTheme();
   const { data: session } = useSession();
 
-  const handleThemeChange = () => {
+  function handleThemeChange() {
     setTheme(theme === "dark" ? "light" : "dark");
-  };
+  }
+
+  function handleSignOut() {
+    signOut({ callbackUrl: "/" });
+  }
 
   return (
     <div className="sticky left-0 top-0 flex h-screen flex-col items-center justify-between px-1 py-4 md:px-4 md:py-8 lg:p-8">
@@ -81,39 +85,44 @@ export default function UserDashboardSidebar() {
             <Link
               href={item.url}
               className={cn(
-                "flex items-center justify-center rounded-full p-4 transition-all duration-300",
-                pathname === item.url && "bg-primary text-primary-foreground",
+                "group flex cursor-pointer items-center justify-center rounded-full p-4",
+                pathname === item.url
+                  ? "bg-primary text-primary-foreground"
+                  : "bg-secondary text-secondary-foreground",
               )}
               key={index}
             >
-              <item.icon className="size-4 lg:size-6" />
+              <item.icon className="size-4 transition-all duration-500 group-hover:scale-125 xl:size-5 2xl:size-6" />
             </Link>
           ))}
         </div>
       </div>
 
       {/* Footer */}
-      <div className="flex flex-col items-center justify-center gap-1 rounded-full bg-secondary">
+      <div className="flex flex-col items-center justify-center gap-1 rounded-full bg-secondary text-secondary-foreground">
         {/* Theme */}
         <div
-          className="flex items-center justify-center rounded-full p-4"
+          className="flex cursor-pointer items-center justify-center rounded-full p-4 transition-all duration-300 hover:scale-125"
           onClick={handleThemeChange}
         >
           {theme === "dark" ? (
-            <Sun className="size-4 lg:size-6" />
+            <Sun className="size-4 xl:size-5 2xl:size-6" />
           ) : (
-            <Moon className="size-4 lg:size-6" />
+            <Moon className="size-4 xl:size-5 2xl:size-6" />
           )}
         </div>
         {/* Logout */}
-        <div className="flex items-center justify-center rounded-full p-4">
-          <LogOut className="size-4 lg:size-6" />
+        <div
+          className="flex cursor-pointer items-center justify-center rounded-full p-4 transition-all duration-300 hover:scale-125"
+          onClick={handleSignOut}
+        >
+          <LogOut className="size-4 xl:size-5 2xl:size-6" />
         </div>
 
         {/* User */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Avatar className="size-12 rounded-full lg:size-14">
+            <Avatar className="size-12 rounded-full xl:size-14 2xl:size-16">
               <AvatarImage
                 src={session?.user?.image || "https://github.com/shadcn.png"}
                 alt={session?.user?.name ?? "CSRB"}
@@ -131,7 +140,9 @@ export default function UserDashboardSidebar() {
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
                     src={
-                      session?.user?.image || "https://github.com/shadcn.png"
+                      session?.user?.image
+                        ? session.user.image
+                        : "https://github.com/shadcn.png"
                     }
                     alt={session?.user?.name ?? "CSRB"}
                   />
@@ -172,7 +183,7 @@ export default function UserDashboardSidebar() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleSignOut}>
               <LogOut />
               Log out
             </DropdownMenuItem>

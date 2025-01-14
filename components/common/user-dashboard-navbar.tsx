@@ -1,13 +1,12 @@
 "use client";
-import React from "react";
-import { useSession } from "next-auth/react";
-import { Bell, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
+import { Bell, Search } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export default function UserDashboardNavbar() {
   const { data: session } = useSession();
@@ -33,7 +32,7 @@ export default function UserDashboardNavbar() {
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Bell className="size-10 rounded-full bg-secondary p-3 text-primary lg:size-14" />
+            <Bell className="size-10 rounded-full bg-secondary p-3 text-secondary-foreground lg:size-14" />
           </DropdownMenuTrigger>
 
           <DropdownMenuContent>

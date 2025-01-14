@@ -13,7 +13,6 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -99,6 +98,7 @@ export default function AddPost() {
       Underline,
     ],
     content: "",
+
     onUpdate: ({ editor }) => {
       form.setValue("content", editor.getHTML());
     },
@@ -159,7 +159,7 @@ export default function AddPost() {
                         <FormControl>
                           <Input
                             placeholder="Write Something"
-                            className="w-full border-none bg-transparent text-lg focus-visible:ring-0 lg:text-2xl"
+                            className="w-full rounded-none border border-x-0 border-b-[1px] border-t-0 bg-transparent text-lg shadow-none focus-visible:ring-0 lg:text-lg xl:text-xl"
                             {...field}
                           />
                         </FormControl>
@@ -175,15 +175,14 @@ export default function AddPost() {
                     name="content"
                     render={() => (
                       <FormItem className="w-full">
-                        <FormLabel className="lg:text-lg">
-                          {"Content"}
-                        </FormLabel>
+                        <FormLabel className="">{"Content"}</FormLabel>
                         <FormControl>
-                          <EditorContent editor={editor} className="prose-sm" />
+                          <EditorContent
+                            editor={editor}
+                            className="prose-sm"
+                            placeholder="Write Something"
+                          />
                         </FormControl>
-                        <FormDescription>
-                          This is your public display name.
-                        </FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
