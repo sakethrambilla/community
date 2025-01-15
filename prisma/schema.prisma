@@ -90,7 +90,6 @@ model Post {
   id        String   @id @default(cuid())
   title     String
   content   String
-  status    String   @default("PENDING")
   pinned Boolean @default(false)
   categoryId String
   category   PostCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)

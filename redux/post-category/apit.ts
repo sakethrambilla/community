@@ -1,5 +1,3 @@
-import { CreatePostSchema } from "@/schema";
-import { Post } from "@/types/post";
 import { PostCategory } from "@/types/post-category";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 

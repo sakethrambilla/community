@@ -1,4 +1,3 @@
-import { Status } from "@prisma/client";
 import { z } from "zod";
 import { baseSchema } from "../baseSchema";
 const postSchema = baseSchema.extend({
@@ -11,7 +10,6 @@ const postSchema = baseSchema.extend({
     .min(10, "Content must be at least 100 characters")
     .max(1000, "Content must be at most 1000 characters"),
   categoryId: z.string({ message: "Category is required" }),
-  status: z.nativeEnum(Status).optional(),
   likes: z.number().optional(),
   userId: z.string({ message: "User ID is required" }),
 });

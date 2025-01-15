@@ -1,5 +1,5 @@
 "use client";
-import UserDetailsForm from "@/components/page/dashboard/account/user-details-form";
+import UserDetailsForm from "@/components/page/user/account/user-details-form";
 import { Separator } from "@/components/ui/separator";
 import { useGetUserDetailsQuery } from "@/redux/user-details/api";
 import { useSession } from "next-auth/react";

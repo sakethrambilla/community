@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { htmlToText } from "@/lib/utils";
-import { Post } from "@/types/post";
+import { Post } from "@/types/user/post";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { format } from "date-fns";
 import { MessageSquare, ThumbsUp } from "lucide-react";

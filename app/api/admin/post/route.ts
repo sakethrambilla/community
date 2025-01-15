@@ -1,26 +1,22 @@
 import { prisma } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function GET() {
   const posts = await prisma.post.findMany({
     select: {
       title: true,
       id: true,
-      status: true,
       pinned: true,
       categoryId: true,
-      category: true,
       likes: true,
       user: {
-        include: {
+        select: {
           name: true,
           email: true,
           image: true,
+          id: true,
         },
       },
-      comments: true,
-      createdAt: true,
-      updatedAt: true,
     },
   });
 

@@ -1,5 +1,5 @@
 import { htmlToText } from "@/lib/utils";
-import { Post } from "@/types/post";
+import { Post } from "@/types/user/post";
 
 interface PostCardProps {
   post: Post | undefined;

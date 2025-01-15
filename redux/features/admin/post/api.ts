@@ -1,21 +1,21 @@
 import { CreatePostSchema } from "@/schema";
-import { Post } from "@/types/user/post";
+import { AdminPost } from "@/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const postApi = createApi({
-  reducerPath: "postApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
+export const adminPostApi = createApi({
+  reducerPath: "adminPostApi",
+  baseQuery: fetchBaseQuery({ baseUrl: "/api/admin/" }),
   tagTypes: ["Post"],
   endpoints: (builder) => ({
-    getPosts: builder.query<Post[], void>({
+    getAdminPosts: builder.query<AdminPost[], void>({
       query: () => `post`,
       providesTags: ["Post"],
     }),
-    getPost: builder.query<Post, string>({
+    getAdminPost: builder.query<AdminPost, string>({
       query: (id) => `post/${id}`,
       providesTags: ["Post"],
     }),
-    createPost: builder.mutation<Post, CreatePostSchema>({
+    createAdminPost: builder.mutation<AdminPost, CreatePostSchema>({
       query: (body) => ({
         url: `post`,
         method: "POST",
@@ -26,4 +26,8 @@ export const postApi = createApi({
   }),
 });
 
-export const { useGetPostsQuery, useCreatePostMutation } = postApi;
+export const {
+  useGetAdminPostsQuery,
+  useGetAdminPostQuery,
+  useCreateAdminPostMutation,
+} = adminPostApi;
