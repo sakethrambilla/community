@@ -27,7 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { useGetPostCategoryQuery } from "@/redux/post-category/apit";
+import { useGetPostCategoryQuery } from "@/redux/post-category/api";
 import { useCreatePostMutation } from "@/redux/post/api";
 import { createPostSchema, CreatePostSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
