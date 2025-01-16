@@ -1,7 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetPostsQuery } from "@/redux/post/api";
+import { useGetPostsQuery } from "@/redux/features/user/post/api";
 import { useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

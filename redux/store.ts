@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { adminPostApi } from "./features/admin/post/api";
-import { postCategoryApi } from "./post-category/api";
-import { postApi } from "./post/api";
+import { postCategoryApi } from "./features/post-category/api";
+import { postApi } from "./features/user/post/api";
 import { userDetailsApi } from "./user-details/api";
 
 export const store = configureStore({

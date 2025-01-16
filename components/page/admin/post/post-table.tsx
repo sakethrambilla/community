@@ -6,27 +6,46 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useGetAdminPostsQuery } from "@/redux/features/admin/post/api";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useToast } from "@/hooks/use-toast";
+import {
+  useDeleteAdminPostMutation,
+  useGetAdminPostsQuery,
+} from "@/redux/features/admin/post/api";
 import { AdminPost } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { Loader2Icon, MoreHorizontal, Trash2Icon } from "lucide-react";
 export default function PostTable() {
-  const { data: posts } = useGetAdminPostsQuery();
-  console.log(posts);
+  const { toast } = useToast();
+  const { data: posts, isLoading: isLoadingPosts } = useGetAdminPostsQuery();
+  const [deletePost, { isLoading: isDeleting, isError: isDeletingError }] =
+    useDeleteAdminPostMutation();
+
   if (!posts) return null;
+
+  function handleDeletePost(id: string) {
+    deletePost(id);
+    if (isDeletingError) {
+      toast({
+        title: "Error",
+        description: "An error occurred while deleting the post",
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: "The post has been deleted successfully",
+      });
+    }
+  }
 
   const columns: ColumnDef<AdminPost>[] = [
     {
       accessorKey: "title",
       header: "Title",
     },
-    {
-      accessorKey: "status",
-      header: "Status",
-    },
+
     {
       accessorKey: "user.name",
       header: "Author",
@@ -34,6 +53,15 @@ export default function PostTable() {
     {
       accessorKey: "user.email",
       header: "Author Email",
+    },
+    {
+      accessorKey: "categoryName",
+      header: "Category",
+    },
+    {
+      accessorKey: "comments",
+      header: "Comments",
+      enableSorting: true,
     },
     {
       id: "actions",
@@ -44,20 +72,23 @@ export default function PostTable() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-fit">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(payment.id)}
+                className="flex items-center gap-2"
+                onClick={() => handleDeletePost(payment.id)}
               >
-                Copy payment ID
+                {isDeleting ? (
+                  <Loader2Icon className="h-4 w-4 animate-spin" />
+                ) : (
+                  <>
+                    Delete <Trash2Icon className="h-4 w-4" />
+                  </>
+                )}
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>View customer</DropdownMenuItem>
-              <DropdownMenuItem>View payment details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -66,8 +97,12 @@ export default function PostTable() {
   ];
 
   return (
-    <div>
-      <DataTable columns={columns} data={posts} />
+    <div className="w-full">
+      {isLoadingPosts ? (
+        <Skeleton className="h-96 w-full" />
+      ) : (
+        <DataTable columns={columns} data={posts} />
+      )}
     </div>
   );
 }

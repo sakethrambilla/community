@@ -1,7 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetPostsQuery } from "@/redux/post/api";
+import { useGetPostsQuery } from "@/redux/features/user/post/api";
 import { CircleArrowLeft, CircleArrowRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import PostCard from "./post-card";

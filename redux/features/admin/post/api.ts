@@ -1,5 +1,5 @@
 import { CreatePostSchema } from "@/schema";
-import { AdminPost } from "@/types";
+import { AdminPost, errorType } from "@/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const adminPostApi = createApi({
@@ -23,6 +23,13 @@ export const adminPostApi = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
+    deleteAdminPost: builder.mutation<errorType, string>({
+      query: (id) => ({
+        url: `post?id=${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Post"],
+    }),
   }),
 });
 
@@ -30,4 +37,5 @@ export const {
   useGetAdminPostsQuery,
   useGetAdminPostQuery,
   useCreateAdminPostMutation,
+  useDeleteAdminPostMutation,
 } = adminPostApi;

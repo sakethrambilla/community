@@ -4,6 +4,7 @@ export type AdminPost = {
   content: string;
   pinned: boolean;
   categoryId: string;
+  categoryName: string;
   likes: number;
   user: {
     id: string;
@@ -11,4 +12,5 @@ export type AdminPost = {
     email: string;
     image: string;
   };
+  comments: number;
 };

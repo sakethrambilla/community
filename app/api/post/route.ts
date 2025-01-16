@@ -3,46 +3,6 @@ import { createPostSchema, deleteSchema } from "@/schema";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-export async function GET(req: Request) {
-  try {
-    console.log("-------------GET /user/post -------------");
-
-    const posts = await prisma.post.findMany({
-      include: {
-        user: true,
-        category: true,
-        comments: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-
-    console.log("posts", posts);
-
-    const transformedPosts = posts.map((post) => ({
-      ...post,
-      comments: post.comments.length || 0,
-      category: post.category.name,
-      categoryId: post.category.id,
-      user: {
-        id: post.user.id,
-        name: post.user.name,
-        email: post.user.email,
-        image: post.user.image,
-      },
-    }));
-
-    return NextResponse.json(transformedPosts);
-  } catch (error: any) {
-    console.log("Error fetching posts", error);
-    return NextResponse.json(
-      { message: "Error fetching posts", error: error.message },
-      { status: 500 },
-    );
-  }
-}
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();

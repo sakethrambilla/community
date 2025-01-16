@@ -1,15 +1,18 @@
 "use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 import { TextEditorButtons } from "@/components/common/text-editor-buttons";
 import { Button } from "@/components/ui/button";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 import {
   Form,
   FormControl,
@@ -26,19 +29,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
 import { useGetPostCategoryQuery } from "@/redux/features/post-category/api";
 import { useCreatePostMutation } from "@/redux/features/user/post/api";
 import { createPostSchema, CreatePostSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import Youtube from "@tiptap/extension-youtube";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useForm } from "react-hook-form";
 
-export default function PostForm() {
+export default function AddPost() {
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const { data: postCategory } = useGetPostCategoryQuery();
@@ -71,10 +74,15 @@ export default function PostForm() {
     editorProps: {
       attributes: {
         class:
-          " prose-sm min-h-[150px] max-h-[450px] w-full rounded-md  bg-transparent  py-2 border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
+          " prose-sm px-4 min-h-[150px] max-h-[450px] w-full rounded-md  bg-transparent  py-2 border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
       },
     },
     extensions: [
+      Placeholder.configure({
+        placeholder: "Content",
+        emptyEditorClass:
+          "cursor-text  before:content-[attr(data-placeholder)] before:text-mds before:absolute before:top-2 before:left-4 before:text-mauve-11 before:opacity-50 before-pointer-events-none",
+      }),
       StarterKit.configure({
         orderedList: {
           HTMLAttributes: {
@@ -116,81 +124,61 @@ export default function PostForm() {
 
   if (!editor) return null;
   return (
-    <div
-      className={cn(
-        "flex h-fit w-full justify-start gap-4 rounded-lg border px-4 py-2 lg:rounded-2xl lg:px-8 lg:py-6",
-        open ? "items-start" : "items-center",
-      )}
-    >
-      {/* Profile Photo */}
-      <Avatar
-        className={cn(
-          "size-8 rounded-full lg:block lg:size-12",
-          open ? "hidden md:block" : "block",
-        )}
-      >
-        <AvatarImage
-          src={session?.user?.image || "https://github.com/shadcn.png"}
-        />
-        <AvatarFallback>CN</AvatarFallback>
-      </Avatar>
+    <Dialog>
+      <DialogTrigger className="h-32 w-96 rounded-xl bg-secondary px-4 py-2 text-xl text-secondary-foreground">
+        Add Post
+      </DialogTrigger>
+      <DialogContent className="w-full max-w-[50vw]">
+        <DialogHeader>
+          <DialogTitle>Add new Post</DialogTitle>
+          <DialogDescription>
+            Create new post with title and content
+          </DialogDescription>
+        </DialogHeader>
 
-      {/* Add Post Form */}
-      <div className="flex w-full flex-col items-start gap-2">
-        {/* Form */}
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
-            <Collapsible open={open} onOpenChange={setOpen} className="w-full">
-              {!open && (
-                <CollapsibleTrigger className="flex w-full flex-col items-start justify-start gap-2">
-                  <div className="flex h-full w-full items-center justify-start lg:text-2xl">
-                    {"Write Something"}
-                  </div>
-                </CollapsibleTrigger>
-              )}
-              <CollapsibleContent className="flex w-full flex-col gap-4">
-                <div className="flex items-center justify-start">
-                  <FormField
-                    control={form.control}
-                    name="title"
-                    render={({ field }) => (
-                      <FormItem className="w-full">
-                        <FormLabel>Title</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Write Something"
-                            className="w-full rounded-none border border-x-0 border-b-[1px] border-t-0 bg-transparent text-lg shadow-none focus-visible:ring-0 lg:text-lg xl:text-xl"
-                            {...field}
-                          />
-                        </FormControl>
+        {/* Add Post Form */}
+        <div className="flex w-full flex-col items-start gap-2">
+          {/* Form */}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+              <div className="flex items-center justify-start">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <Input
+                          placeholder="Title"
+                          className="w-full rounded-none border-none bg-transparent text-lg shadow-none focus-visible:ring-0 lg:text-lg xl:text-xl"
+                          {...field}
+                        />
+                      </FormControl>
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <FormField
-                    control={form.control}
-                    name="content"
-                    render={() => (
-                      <FormItem className="w-full">
-                        <FormLabel className="">{"Content"}</FormLabel>
-                        <FormControl>
-                          <EditorContent
-                            editor={editor}
-                            className="prose-sm"
-                            placeholder="Write Something"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </CollapsibleContent>
-            </Collapsible>
-            {open && (
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <FormField
+                  control={form.control}
+                  name="content"
+                  render={() => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <EditorContent
+                          editor={editor}
+                          className="prose-sm"
+                          placeholder="Write Something"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <div className="flex flex-wrap items-center justify-between gap-4">
                 <div className="flex flex-wrap items-center gap-2">
                   <TextEditorButtons editor={editor} />
@@ -227,10 +215,10 @@ export default function PostForm() {
                   </Button>
                 </div>
               </div>
-            )}
-          </form>
-        </Form>
-      </div>
-    </div>
+            </form>
+          </Form>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
