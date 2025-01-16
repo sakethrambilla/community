@@ -20,28 +20,43 @@ export default function PostList() {
   // console.log("POst List", postData);
   return (
     <div className="flex w-full flex-col gap-4">
-      {isLoading && (
+      {isLoading ? (
         <div className="flex flex-col gap-12">
           {Array.from({ length: 3 }).map((_, index) => (
             <Skeleton key={index} className="h-48 w-full rounded-2xl" />
           ))}
         </div>
+      ) : (
+        <>
+          {!postData || postData?.length === 0 ? (
+            <div className="flex h-full w-full flex-col items-center justify-center gap-4 pt-12">
+              <p className="text-3xl">
+                Sorry, there are no community posts yet.
+              </p>
+
+              <p className="font-nippo text-[15rem] text-muted-foreground">
+                404
+              </p>
+            </div>
+          ) : (
+            postData?.map((post, index) => (
+              <Drawer key={index} open={open} onOpenChange={setOpen}>
+                <DrawerTrigger>
+                  <PostListCard
+                    post={post}
+                    key={post.id}
+                    setActivePost={setActivePost}
+                  />
+                </DrawerTrigger>
+                <DrawerContent className="flex h-[80vh] flex-col gap-8 px-12">
+                  <DialogTitle></DialogTitle>
+                  <PostCard post={activePost} />
+                </DrawerContent>
+              </Drawer>
+            ))
+          )}
+        </>
       )}
-      {postData?.map((post, index) => (
-        <Drawer key={index} open={open} onOpenChange={setOpen}>
-          <DrawerTrigger>
-            <PostListCard
-              post={post}
-              key={post.id}
-              setActivePost={setActivePost}
-            />
-          </DrawerTrigger>
-          <DrawerContent className="flex h-[80vh] flex-col gap-8 px-12">
-            <DialogTitle></DialogTitle>
-            <PostCard post={activePost} />
-          </DrawerContent>
-        </Drawer>
-      ))}
     </div>
   );
 }

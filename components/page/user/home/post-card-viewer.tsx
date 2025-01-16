@@ -56,18 +56,27 @@ export default function PostCardViewer() {
 
   return (
     <div className="flex h-full w-full flex-row items-center gap-4">
-      <CircleArrowLeft
-        className="size-4 cursor-pointer text-muted-foreground lg:size-12"
-        onClick={handlePreviousPost}
-      />
       {isLoading && <Skeleton className="h-48 w-full rounded-2xl" />}
-      <div className="flex w-full flex-col gap-4 rounded-2xl border-2 p-8">
-        <PostCard post={postData?.[activePostIndex]} />
-      </div>
-      <CircleArrowRight
-        className="size-4 cursor-pointer text-muted-foreground lg:size-12"
-        onClick={handleNextPost}
-      />
+      {!postData || postData?.length === 0 ? (
+        <div className="flex h-full w-full flex-col items-center justify-center gap-4 pt-12">
+          <p className="text-3xl">Sorry, there are no community posts yet.</p>
+          <p className="font-nippo text-[15rem] text-muted-foreground">404</p>
+        </div>
+      ) : (
+        <>
+          <CircleArrowLeft
+            className="size-4 cursor-pointer text-muted-foreground lg:size-12"
+            onClick={handlePreviousPost}
+          />
+          <div className="flex w-full flex-col gap-4 rounded-2xl border-2 p-8">
+            <PostCard post={postData?.[activePostIndex]} />
+          </div>
+          <CircleArrowRight
+            className="size-4 cursor-pointer text-muted-foreground lg:size-12"
+            onClick={handleNextPost}
+          />
+        </>
+      )}
     </div>
   );
 }

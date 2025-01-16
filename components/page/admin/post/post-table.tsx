@@ -84,14 +84,14 @@ export default function PostTable() {
             <DropdownMenuContent align="end" className="w-fit">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                className="flex items-center gap-2 bg-destructive text-destructive-foreground"
+                className="flex w-full items-center justify-center gap-2 bg-destructive text-destructive-foreground"
                 onClick={() => handleDeletePost(payment.id)}
               >
                 {isDeleting ? (
                   <Loader2Icon className="h-4 w-4 animate-spin" />
                 ) : (
                   <>
-                    Delete <Trash2Icon className="h-4 w-4" />
+                    <Trash2Icon className="h-4 w-4" />
                   </>
                 )}
               </DropdownMenuItem>
@@ -105,7 +105,11 @@ export default function PostTable() {
   return (
     <div className="w-full">
       {isLoadingPosts ? (
-        <Skeleton className="h-96 w-full" />
+        <div className="flex flex-col gap-12">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <Skeleton key={index} className="h-48 w-full rounded-2xl" />
+          ))}
+        </div>
       ) : (
         <DataTable columns={columns} data={posts} />
       )}
