@@ -29,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 import { useGetPostCategoryQuery } from "@/redux/features/shared/post-category/api";
 import { useCreatePostMutation } from "@/redux/features/shared/post/api";
 import { createPostSchema, CreatePostSchema } from "@/schema";
@@ -42,10 +43,11 @@ import StarterKit from "@tiptap/starter-kit";
 import { useForm } from "react-hook-form";
 
 export default function AddPost() {
+  const { toast } = useToast();
   const { data: session } = useSession();
   const [open, setOpen] = useState<boolean>(false);
   const { data: postCategory } = useGetPostCategoryQuery();
-  const [createPost, { isSuccess }] = useCreatePostMutation();
+  const [createPost] = useCreatePostMutation();
   console.log("Open", open);
 
   const form = useForm<CreatePostSchema>({
@@ -60,14 +62,27 @@ export default function AddPost() {
   async function onSubmit(data: CreatePostSchema) {
     try {
       console.log("On Submit", data);
-      const res = await createPost(data).unwrap();
-      if (isSuccess) {
-        console.log("Post Created Successfully");
-        setOpen(false);
-      }
-      console.log(res);
+      await createPost(data)
+        .unwrap()
+        .then(() => {
+          toast({
+            title: "Success",
+            description: "The post has been created successfully",
+          });
+        })
+        .catch((err) => {
+          console.log("Error", err);
+          toast({
+            title: "Error",
+            description: err.data.message,
+            variant: "destructive",
+          });
+        });
+      setOpen(false);
+      editor?.commands.setContent("");
+      form.reset();
     } catch (error) {
-      console.log(error);
+      console.log("Error", error);
     }
   }
 
@@ -125,11 +140,11 @@ export default function AddPost() {
 
   if (!editor) return null;
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="h-24 w-56 rounded-xl bg-secondary px-4 py-2 text-secondary-foreground xl:text-xl">
         Add Post
       </DialogTrigger>
-      <DialogContent className="w-full max-w-[50vw]">
+      <DialogContent className="w-full max-w-[60vw]">
         <DialogHeader>
           <DialogTitle>Add new Post</DialogTitle>
           <DialogDescription>

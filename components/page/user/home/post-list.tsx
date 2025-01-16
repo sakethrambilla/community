@@ -36,7 +36,7 @@ export default function PostList() {
               setActivePost={setActivePost}
             />
           </DrawerTrigger>
-          <DrawerContent className="h-[80vh]">
+          <DrawerContent className="flex h-[80vh] flex-col gap-8 px-12">
             <DialogTitle></DialogTitle>
             <PostCard post={activePost} />
           </DrawerContent>
@@ -75,8 +75,9 @@ function PostListCard({ post, setActivePost }: PostCardProps) {
         </div>
       </div>
       <div className="flex w-full flex-col items-start gap-0">
-        <div className="text-2xl">{post.title}</div>
+        <div className="text-2xl text-primary">{post.title}</div>
         <p
+          className="text-muted-foreground"
           dangerouslySetInnerHTML={{
             __html: `${htmlToText(post.content).substring(0, 200)}...`,
           }}

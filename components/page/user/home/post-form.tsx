@@ -26,23 +26,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { useGetPostCategoryQuery } from "@/redux/features/shared/post-category/api";
 import { useCreatePostMutation } from "@/redux/features/shared/post/api";
 import { createPostSchema, CreatePostSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import Youtube from "@tiptap/extension-youtube";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 export default function PostForm() {
+  const { toast } = useToast();
   const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const { data: postCategory } = useGetPostCategoryQuery();
-  const [createPost, { isSuccess }] = useCreatePostMutation();
+  const [createPost, { isLoading }] = useCreatePostMutation();
 
   const form = useForm<CreatePostSchema>({
     resolver: zodResolver(createPostSchema),
@@ -54,27 +58,40 @@ export default function PostForm() {
   });
 
   async function onSubmit(data: CreatePostSchema) {
-    try {
-      console.log("On Submit", data);
-      const res = await createPost(data).unwrap();
-      if (isSuccess) {
-        console.log("Post Created Successfully");
-        setOpen(false);
-      }
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
+    console.log("On Submit", data);
+    await createPost(data)
+      .unwrap()
+      .then(() => {
+        toast({
+          title: "Success",
+          description: "The post has been created successfully",
+        });
+      })
+      .catch((err) => {
+        toast({
+          title: "Error",
+          description: err.data.message,
+          variant: "destructive",
+        });
+      });
+    form.reset();
+    editor?.commands.setContent("");
+    setOpen(false);
   }
 
   const editor = useEditor({
     editorProps: {
       attributes: {
         class:
-          " prose-sm min-h-[150px] max-h-[450px] w-full rounded-md  bg-transparent  py-2 border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
+          " prose-sm min-h-[150px] max-h-[450px] w-full rounded-md  bg-transparent px-4  py-2 border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
       },
     },
     extensions: [
+      Placeholder.configure({
+        placeholder: "Content",
+        emptyEditorClass:
+          "cursor-text  before:content-[attr(data-placeholder)] before:text-mds before:absolute before:top-2 before:left-4 before:text-mauve-11 before:opacity-50 before-pointer-events-none",
+      }),
       StarterKit.configure({
         orderedList: {
           HTMLAttributes: {
@@ -155,10 +172,9 @@ export default function PostForm() {
                     name="title"
                     render={({ field }) => (
                       <FormItem className="w-full">
-                        <FormLabel>Title</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Write Something"
+                            placeholder="Title"
                             className="w-full rounded-none border border-x-0 border-b-[1px] border-t-0 bg-transparent text-lg shadow-none focus-visible:ring-0 lg:text-lg xl:text-xl"
                             {...field}
                           />
@@ -175,7 +191,6 @@ export default function PostForm() {
                     name="content"
                     render={() => (
                       <FormItem className="w-full">
-                        <FormLabel className="">{"Content"}</FormLabel>
                         <FormControl>
                           <EditorContent
                             editor={editor}
@@ -217,7 +232,13 @@ export default function PostForm() {
                   />
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button type="submit">{"Add Post"}</Button>
+                  {isLoading ? (
+                    <Button type="button" disabled>
+                      <Loader2 className="size-4 animate-spin" />
+                    </Button>
+                  ) : (
+                    <Button type="submit">{"Add Post"}</Button>
+                  )}
                   <Button
                     variant={"outline"}
                     type="button"

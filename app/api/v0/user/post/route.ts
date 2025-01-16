@@ -18,7 +18,7 @@ export async function GET() {
       },
     });
 
-    console.log("posts", posts);
+    // console.log("posts", posts);
 
     const transformedPosts = posts.map((post) => ({
       ...post,

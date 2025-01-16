@@ -18,14 +18,12 @@ import {
   Italic,
   List,
   ListOrdered,
-  Paperclip,
   Strikethrough,
   UnderlineIcon,
   YoutubeIcon,
 } from "lucide-react";
 // import FileUpload from "./file-upload";
 export const TextEditorButtons = ({ editor }: { editor: Editor }) => {
-  const [fileUploadOpen, setFileUploadOpen] = useState(false);
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [youtubePopoverOpen, setYoutubePopoverOpen] = useState(false);
 
@@ -78,22 +76,6 @@ export const TextEditorButtons = ({ editor }: { editor: Editor }) => {
         <ListOrdered className="h-4 w-4" />
       </Toggle>
       <Separator orientation="vertical" className="h-8 w-[1px]" />
-
-      {/* File Upload */}
-      <Dialog open={fileUploadOpen} onOpenChange={setFileUploadOpen}>
-        <DialogTrigger asChild>
-          <Toggle>
-            <Paperclip className="h-4 w-4" />
-          </Toggle>
-        </DialogTrigger>
-        <DialogContent className="flex w-[80vw] flex-col gap-4 rounded-lg lg:w-full">
-          <DialogHeader>
-            <DialogTitle>Attach File</DialogTitle>
-            <DialogDescription>Attach a file to your post.</DialogDescription>
-          </DialogHeader>
-          {/* <FileUpload onClose={() => setFileUploadOpen(false)} /> */}
-        </DialogContent>
-      </Dialog>
 
       {/* Youtube */}
       <Dialog open={youtubePopoverOpen} onOpenChange={setYoutubePopoverOpen}>

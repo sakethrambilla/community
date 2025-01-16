@@ -1,17 +1,41 @@
 import { prisma } from "@/lib/db";
-import { createPostSchema, deleteSchema } from "@/schema";
-import { NextResponse } from "next/server";
+import { createPostSchema } from "@/schema";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    console.log("Post Post body", body);
+
     const { title, content, userId, categoryId } = createPostSchema.parse(body);
 
-    if (!userId) {
+    if (!userId || !categoryId) {
       return NextResponse.json(
-        { messsage: " Userd Id is required" },
+        { messsage: " Userd Id and Category Id is required" },
+        { status: 404 },
+      );
+    }
+
+    const postCategory = await prisma.postCategory.findUnique({
+      where: { id: categoryId },
+    });
+
+    if (!postCategory) {
+      return NextResponse.json(
+        { message: "Category not found. Please try again later." },
+        { status: 404 },
+      );
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          message: "User not found or not authorized. Please try again later.",
+        },
         { status: 404 },
       );
     }
@@ -31,7 +55,14 @@ export async function POST(req: Request) {
       },
     });
 
-    return NextResponse.json(post);
+    if (!post) {
+      return NextResponse.json(
+        { message: "Post not created" },
+        { status: 400 },
+      );
+    }
+
+    return NextResponse.json({ message: "Post created" });
   } catch (error) {
     console.log("Error", error);
     if (error instanceof z.ZodError) {
@@ -47,12 +78,16 @@ export async function POST(req: Request) {
   }
 }
 
-export async function DELETE(req: Request) {
+export async function DELETE(req: NextRequest) {
   try {
-    const body = await req.json();
-    const { id } = deleteSchema.parse(body);
+    console.log("-------- DELETE v0/shared/post/ ---------s");
+    const id = req.nextUrl.searchParams.get("id");
+    console.log("ID", id);
+    if (!id) {
+      return NextResponse.json({ message: "ID is required" }, { status: 400 });
+    }
 
-    const post = await prisma.post.findUnique({ where: { id } });
+    const post = await prisma.post.findUnique({ where: { id: id } });
 
     if (!post) {
       return NextResponse.json({ message: "Post not found" }, { status: 404 });
@@ -62,6 +97,7 @@ export async function DELETE(req: Request) {
 
     return NextResponse.json(post);
   } catch (error) {
+    console.log("Error", error);
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { message: "Invalid request body" },

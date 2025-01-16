@@ -32,12 +32,14 @@ export default function PostTable() {
         toast({
           title: "Success",
           description: "The post has been deleted successfully",
+          variant: "destructive",
         });
       })
       .catch((err) => {
         toast({
           title: "Error",
           description: err.data,
+          variant: "destructive",
         });
       });
     if (deletingError) {
