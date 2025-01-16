@@ -1,14 +1,14 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetPostsQuery } from "@/redux/features/user/post/api";
+import { useGetUserPostsQuery } from "@/redux/features/shared/post/api";
 import { CircleArrowLeft, CircleArrowRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import PostCard from "./post-card";
 
 export default function PostCardViewer() {
   const [activePostIndex, setActivePostIndex] = useState<number>(0);
-  const { data: postData, isLoading } = useGetPostsQuery();
+  const { data: postData, isLoading } = useGetUserPostsQuery();
 
   function handleNextPost() {
     if (postData && activePostIndex < postData.length - 1) {

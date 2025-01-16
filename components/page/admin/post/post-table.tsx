@@ -11,32 +11,36 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import {
-  useDeleteAdminPostMutation,
+  useDeletePostMutation,
   useGetAdminPostsQuery,
-} from "@/redux/features/admin/post/api";
+} from "@/redux/features/shared/post/api";
 import { AdminPost } from "@/types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Loader2Icon, MoreHorizontal, Trash2Icon } from "lucide-react";
 export default function PostTable() {
   const { toast } = useToast();
   const { data: posts, isLoading: isLoadingPosts } = useGetAdminPostsQuery();
-  const [deletePost, { isLoading: isDeleting, isError: isDeletingError }] =
-    useDeleteAdminPostMutation();
-
+  const [deletePost, { isLoading: isDeleting, error: deletingError }] =
+    useDeletePostMutation();
+  console.log("Delete Error", deletingError);
   if (!posts) return null;
 
   function handleDeletePost(id: string) {
-    deletePost(id);
-    if (isDeletingError) {
-      toast({
-        title: "Error",
-        description: "An error occurred while deleting the post",
+    deletePost(id)
+      .unwrap()
+      .then(() => {
+        toast({
+          title: "Success",
+          description: "The post has been deleted successfully",
+        });
+      })
+      .catch((err) => {
+        toast({
+          title: "Error",
+          description: err.data,
+        });
       });
-    } else {
-      toast({
-        title: "Success",
-        description: "The post has been deleted successfully",
-      });
+    if (deletingError) {
     }
   }
 
@@ -78,7 +82,7 @@ export default function PostTable() {
             <DropdownMenuContent align="end" className="w-fit">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 bg-destructive text-destructive-foreground"
                 onClick={() => handleDeletePost(payment.id)}
               >
                 {isDeleting ? (

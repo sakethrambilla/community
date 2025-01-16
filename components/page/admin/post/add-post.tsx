@@ -29,8 +29,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useGetPostCategoryQuery } from "@/redux/features/post-category/api";
-import { useCreatePostMutation } from "@/redux/features/user/post/api";
+import { useGetPostCategoryQuery } from "@/redux/features/shared/post-category/api";
+import { useCreatePostMutation } from "@/redux/features/shared/post/api";
 import { createPostSchema, CreatePostSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "@tiptap/extension-link";
@@ -43,9 +43,10 @@ import { useForm } from "react-hook-form";
 
 export default function AddPost() {
   const { data: session } = useSession();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const { data: postCategory } = useGetPostCategoryQuery();
   const [createPost, { isSuccess }] = useCreatePostMutation();
+  console.log("Open", open);
 
   const form = useForm<CreatePostSchema>({
     resolver: zodResolver(createPostSchema),
@@ -125,7 +126,7 @@ export default function AddPost() {
   if (!editor) return null;
   return (
     <Dialog>
-      <DialogTrigger className="h-32 w-96 rounded-xl bg-secondary px-4 py-2 text-xl text-secondary-foreground">
+      <DialogTrigger className="h-24 w-56 rounded-xl bg-secondary px-4 py-2 text-secondary-foreground xl:text-xl">
         Add Post
       </DialogTrigger>
       <DialogContent className="w-full max-w-[50vw]">

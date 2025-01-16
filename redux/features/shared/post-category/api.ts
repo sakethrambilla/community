@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const postCategoryApi = createApi({
   reducerPath: "postCategoryApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "/api/v0/shared/" }),
   endpoints: (builder) => ({
     getPostCategory: builder.query<PostCategory[], void>({
       query: () => `post-category`,

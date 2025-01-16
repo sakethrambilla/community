@@ -1,14 +1,5 @@
 "use client";
 
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react";
-import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -25,18 +16,43 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-
+import {
+  BadgeCheck,
+  Bell,
+  ChevronsUpDown,
+  CreditCard,
+  LogOut,
+  Moon,
+  Sparkles,
+  Sun,
+} from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useTheme } from "next-themes";
 export function NavUser() {
   const { data: session } = useSession();
   const { isMobile } = useSidebar();
+  const { theme, setTheme } = useTheme();
+  const themeToggle = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   return (
     <SidebarMenu>
+      {/* Logout */}
       <SidebarMenuItem>
         <SidebarMenuButton asChild>
           <p>
             <LogOut />
             <span>Log out</span>
+          </p>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+
+      <SidebarMenuItem>
+        <SidebarMenuButton asChild onClick={themeToggle}>
+          <p>
+            {theme === "dark" ? <Sun /> : <Moon />}
+            <span>{theme === "dark" ? "Light" : "Dark"}</span>
           </p>
         </SidebarMenuButton>
       </SidebarMenuItem>

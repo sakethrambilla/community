@@ -3,7 +3,7 @@ import { createPostSchema, deleteSchema } from "@/schema";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     console.log("-------------GET /user/post -------------");
 
@@ -34,10 +34,10 @@ export async function GET(req: Request) {
     }));
 
     return NextResponse.json(transformedPosts);
-  } catch (error: any) {
+  } catch (error) {
     console.log("Error fetching posts", error);
     return NextResponse.json(
-      { message: "Error fetching posts", error: error.message },
+      { message: "Error fetching posts" },
       { status: 500 },
     );
   }

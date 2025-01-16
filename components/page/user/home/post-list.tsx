@@ -1,7 +1,7 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetPostsQuery } from "@/redux/features/user/post/api";
+import { useGetUserPostsQuery } from "@/redux/features/shared/post/api";
 import { useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -14,7 +14,7 @@ import { MessageSquare, ThumbsUp } from "lucide-react";
 import PostCard from "./post-card";
 
 export default function PostList() {
-  const { data: postData, isLoading } = useGetPostsQuery();
+  const { data: postData, isLoading } = useGetUserPostsQuery();
   const [activePost, setActivePost] = useState<Post | undefined>(undefined);
   const [open, setOpen] = useState(false);
   // console.log("POst List", postData);

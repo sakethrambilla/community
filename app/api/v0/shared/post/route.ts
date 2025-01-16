@@ -51,7 +51,15 @@ export async function DELETE(req: Request) {
   try {
     const body = await req.json();
     const { id } = deleteSchema.parse(body);
-    const post = await prisma.post.delete({ where: { id } });
+
+    const post = await prisma.post.findUnique({ where: { id } });
+
+    if (!post) {
+      return NextResponse.json({ message: "Post not found" }, { status: 404 });
+    }
+
+    await prisma.post.delete({ where: { id } });
+
     return NextResponse.json(post);
   } catch (error) {
     if (error instanceof z.ZodError) {

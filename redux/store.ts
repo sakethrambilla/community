@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { adminPostApi } from "./features/admin/post/api";
-import { postCategoryApi } from "./features/post-category/api";
-import { postApi } from "./features/user/post/api";
+import { postCategoryApi } from "./features/shared/post-category/api";
+import { postApi } from "./features/shared/post/api";
 import { userDetailsApi } from "./user-details/api";
 
 export const store = configureStore({
@@ -9,14 +8,12 @@ export const store = configureStore({
     [postApi.reducerPath]: postApi.reducer,
     [postCategoryApi.reducerPath]: postCategoryApi.reducer,
     [userDetailsApi.reducerPath]: userDetailsApi.reducer,
-    [adminPostApi.reducerPath]: adminPostApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       postApi.middleware,
       postCategoryApi.middleware,
       userDetailsApi.middleware,
-      adminPostApi.middleware,
     ),
 });
 
