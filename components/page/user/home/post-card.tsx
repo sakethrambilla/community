@@ -1,3 +1,4 @@
+"use client";
 import CommentForm from "@/components/page/shared/post/comment-form";
 import CommentList from "@/components/page/shared/post/comment-list";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -5,10 +6,17 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
+import {
   useCreateLikeMutation,
   useDeleteLikeMutation,
   useGetLikeQuery,
 } from "@/redux/features/shared/like/api";
+import { selectPostView } from "@/redux/features/user/post-toggle/slice";
 import { Post } from "@/types/user/post";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
@@ -18,7 +26,9 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 interface PostCardProps {
   post: Post | undefined;
@@ -26,6 +36,7 @@ interface PostCardProps {
 
 export default function PostCard({ post }: PostCardProps) {
   const { data: session } = useSession();
+  const postView = useSelector(selectPostView);
   const { data: likeData, isLoading: isLikeLoading } = useGetLikeQuery({
     postId: post?.id || "",
     userId: session?.user.id || "",
@@ -40,7 +51,7 @@ export default function PostCard({ post }: PostCardProps) {
     editorProps: {
       attributes: {
         class:
-          " prose-sm min-h-[150px] max-h-[450px] w-full rounded-md  bg-transparent border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
+          " prose-sm min-h-[150px]  w-full rounded-md  bg-transparent border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
       },
     },
     extensions: [
@@ -62,9 +73,8 @@ export default function PostCard({ post }: PostCardProps) {
         },
       }),
       Youtube.configure({
-        allowFullscreen: false,
         HTMLAttributes: {
-          class: "prose-sm w-80 h-64 lg:w-full lg:h-auto",
+          class: "prose-sm w-60 h-40 lg:w-[400px] lg:h-[300px]",
         },
       }),
       Link.configure({
@@ -77,6 +87,11 @@ export default function PostCard({ post }: PostCardProps) {
     content: post?.content || "",
   });
 
+  useEffect(() => {
+    if (editor && post?.content) {
+      editor.commands.setContent(post.content);
+    }
+  }, [post?.content, editor]);
   const handleLike = async () => {
     if (!post) return;
 
@@ -91,7 +106,12 @@ export default function PostCard({ post }: PostCardProps) {
   };
   if (!post) return null;
   return (
-    <div className="flex h-full min-h-[500px] w-full flex-col items-start justify-between gap-8 2xl:min-h-[700px]">
+    <div
+      className={cn(
+        "flex h-full w-full flex-col items-start justify-between gap-8 overflow-y-auto lg:min-h-[500px] 2xl:min-h-[500px]",
+        postView === "card" ? "max-h-[400px]" : "max-h-none",
+      )}
+    >
       <div className="flex w-full flex-col gap-4">
         <div className="flex items-center justify-between">
           {/* User Info */}
@@ -146,7 +166,17 @@ export default function PostCard({ post }: PostCardProps) {
       <div className="flex w-full flex-col items-center justify-start gap-4 pb-4">
         <Separator className="w-full" />
         {/* Comment List */}
-        <CommentList postId={post.id} />
+        <Collapsible className="flex w-full flex-col gap-2">
+          <CollapsibleTrigger className="w-full items-start justify-start">
+            <p className="text-start text-muted-foreground lg:text-lg">
+              {" "}
+              View Comments
+            </p>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <CommentList postId={post.id} />
+          </CollapsibleContent>
+        </Collapsible>
         {/* Write Comment */}
         <CommentForm postId={post.id} />
       </div>

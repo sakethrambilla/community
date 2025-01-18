@@ -7,7 +7,6 @@ import {
   Brain,
   Code,
   CreditCard,
-  GalleryVerticalEnd,
   Lightbulb,
   LogOut,
   MessageCircleQuestion,
@@ -58,7 +57,13 @@ const items = [
   },
 ];
 
-export default function UserDashboardSidebar() {
+interface UserDashboardSidebarProps {
+  isSidebarOpen: boolean;
+}
+
+export default function UserDashboardSidebar({
+  isSidebarOpen,
+}: UserDashboardSidebarProps) {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const { data: session } = useSession();
@@ -72,13 +77,13 @@ export default function UserDashboardSidebar() {
   }
 
   return (
-    <div className="sticky left-0 top-0 flex h-screen flex-col items-center justify-between px-2 py-4 md:px-4 md:py-8 lg:py-8">
+    <div
+      className={cn(
+        "sticky left-0 top-20 h-full flex-col items-center justify-between gap-8 px-2 py-4 transition-all duration-500 ease-in-out md:top-36 md:flex md:gap-16 md:px-4 md:py-8 lg:py-8",
+        isSidebarOpen ? "flex" : "hidden",
+      )}
+    >
       <div className="flex flex-col items-center justify-start gap-8 lg:gap-8 2xl:gap-24">
-        {/* Logo */}
-        <div className="flex items-center justify-center rounded-full bg-sidebar-primary p-4 text-sidebar-primary-foreground">
-          <GalleryVerticalEnd className="size-4 lg:size-6" />
-        </div>
-
         {/* Items */}
         <div className="flex flex-col items-center justify-center gap-2 rounded-full bg-secondary">
           {items.map((item, index) => (

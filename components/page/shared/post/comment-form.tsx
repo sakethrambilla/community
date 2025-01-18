@@ -78,7 +78,7 @@ export default function CommentForm({ postId }: CommentFormProps) {
                 <FormControl className="w-full">
                   <Input
                     placeholder="Add Comment"
-                    className="w-full rounded-none border-none bg-transparent text-lg shadow-none focus-visible:ring-0 lg:text-lg"
+                    className="w-full rounded-none border-none bg-transparent shadow-none focus-visible:ring-0 lg:text-lg"
                     {...field}
                   />
                 </FormControl>

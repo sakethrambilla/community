@@ -1,22 +1,29 @@
+"use client";
+
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
-interface PostSwitchProps {
-  setToggle: (toggle: boolean) => void;
-  toggle: boolean;
-}
+import {
+  selectPostView,
+  setPostView,
+} from "@/redux/features/user/post-toggle/slice";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function PostSwitch({ setToggle, toggle }: PostSwitchProps) {
+export default function PostSwitch() {
+  const postView = useSelector(selectPostView);
+  const dispatch = useDispatch();
   return (
     <div className="flex items-center gap-4">
-      <span>List</span>
+      <span className="text-sm lg:text-base">List</span>
       <Switch
-        checked={toggle}
-        onCheckedChange={setToggle}
+        checked={postView === "card"}
+        onCheckedChange={() =>
+          dispatch(setPostView(postView === "list" ? "card" : "list"))
+        }
         className={cn(
           "data-[state=checked]:bg-primary data-[state=unchecked]:bg-secondary",
         )}
       />
-      <span>Card</span>
+      <span className="text-sm lg:text-base">Card</span>
     </div>
   );
 }

@@ -17,6 +17,7 @@ export default function PostCardViewer({
   isLoading,
 }: PostCardViewerProps) {
   const { toast } = useToast();
+  console.log(postData);
   const [activePostIndex, setActivePostIndex] = useState<number>(0);
 
   function handleNextPost() {
@@ -62,14 +63,14 @@ export default function PostCardViewer({
   }, [handleKeyDown]);
 
   return (
-    <div className="flex h-full w-full flex-row items-center gap-4">
+    <div className="flex h-full w-full flex-col items-center gap-4 md:flex-row">
       {isLoading && <Skeleton className="h-48 w-full rounded-2xl" />}
 
       <CircleArrowLeft
-        className="size-4 cursor-pointer text-muted-foreground lg:size-12"
+        className="hidden size-4 cursor-pointer text-muted-foreground md:flex md:size-8 lg:size-12"
         onClick={handlePreviousPost}
       />
-      <div className="flex w-full flex-col gap-4 rounded-2xl border-2 p-8">
+      <div className="flex w-full flex-col gap-4 rounded-2xl border-2 px-4 py-6 lg:p-8">
         {isLoading ? (
           <Skeleton className="h-48 w-full rounded-2xl" />
         ) : (
@@ -77,9 +78,20 @@ export default function PostCardViewer({
         )}
       </div>
       <CircleArrowRight
-        className="size-4 cursor-pointer text-muted-foreground lg:size-12"
+        className="hidden size-4 cursor-pointer text-muted-foreground md:flex md:size-8 lg:size-12"
         onClick={handleNextPost}
       />
+
+      <div className="flex items-center gap-4 md:hidden">
+        <CircleArrowLeft
+          className="size-8 cursor-pointer text-muted-foreground lg:size-12"
+          onClick={handlePreviousPost}
+        />
+        <CircleArrowRight
+          className="size-8 cursor-pointer text-muted-foreground lg:size-12"
+          onClick={handleNextPost}
+        />
+      </div>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { commentApi } from "./features/shared/comment/api";
 import { likeApi } from "./features/shared/like/api";
 import { postCategoryApi } from "./features/shared/post-category/api";
 import { postApi } from "./features/shared/post/api";
+import { postViewSlice } from "./features/user/post-toggle/slice";
 import { userDetailsApi } from "./user-details/api";
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     [userDetailsApi.reducerPath]: userDetailsApi.reducer,
     [commentApi.reducerPath]: commentApi.reducer,
     [likeApi.reducerPath]: likeApi.reducer,
+    postView: postViewSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -20,6 +22,7 @@ export const store = configureStore({
       commentApi.middleware,
       likeApi.middleware,
     ),
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

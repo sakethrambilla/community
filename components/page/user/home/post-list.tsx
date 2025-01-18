@@ -20,7 +20,7 @@ interface PostListProps {
 }
 
 export default function PostList({ postData, isLoading }: PostListProps) {
-  const [setActivePost] = useState<Post | undefined>(undefined);
+  const [activePost, setActivePost] = useState<Post | undefined>(undefined);
   const [open, setOpen] = useState(false);
   // console.log("POst List", postData);
   return (
@@ -42,9 +42,9 @@ export default function PostList({ postData, isLoading }: PostListProps) {
                   setActivePost={setActivePost}
                 />
               </DrawerTrigger>
-              <DrawerContent className="flex h-[80vh] flex-col gap-4 px-4 lg:gap-8 lg:px-12">
+              <DrawerContent className="flex h-[80vh] flex-col gap-4 px-4 lg:h-[90vh] lg:gap-8">
                 <DialogTitle></DialogTitle>
-                <PostCard post={post} />
+                <PostCard post={activePost} />
               </DrawerContent>
             </Drawer>
           ))}
@@ -65,7 +65,7 @@ function PostListCard({ post, setActivePost }: PostCardProps) {
   }
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-2xl border px-4 py-2 text-start lg:px-8 lg:py-4"
+      className="flex w-full flex-col gap-2 rounded-2xl border px-4 py-4 text-start lg:px-8 lg:py-4"
       onClick={handlePostClick}
     >
       {/* User Info */}
@@ -87,7 +87,7 @@ function PostListCard({ post, setActivePost }: PostCardProps) {
           {post.title}
         </div>
         <p
-          className="text-muted-foreground"
+          className="text-sm text-muted-foreground"
           dangerouslySetInnerHTML={{
             __html: `${htmlToText(post.content).substring(0, 200)}...`,
           }}

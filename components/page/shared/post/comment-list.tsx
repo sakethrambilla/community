@@ -74,7 +74,7 @@ function CommentCard({ comment }: { comment: CommentType }) {
           <AvatarImage src={comment.image || "https://github.com/shadcn.png"} />
           <AvatarFallback>{comment.user.charAt(0)}</AvatarFallback>
         </Avatar>
-        <div className="flex flex-col">
+        <div className="flex flex-col text-sm lg:text-base">
           <p>{comment.content}</p>
           <p className="text-xs text-muted-foreground">{comment.user}</p>
         </div>

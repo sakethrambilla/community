@@ -135,7 +135,7 @@ export default function PostForm() {
   return (
     <div
       className={cn(
-        "flex h-fit w-full justify-start gap-4 rounded-lg border px-4 py-2 lg:rounded-2xl lg:px-8 lg:py-6",
+        "flex h-fit w-full justify-start gap-4 rounded-lg border px-4 py-2 lg:rounded-xl lg:px-6 lg:py-4",
         open ? "items-start" : "items-center",
       )}
     >
@@ -160,7 +160,7 @@ export default function PostForm() {
             <Collapsible open={open} onOpenChange={setOpen} className="w-full">
               {!open && (
                 <CollapsibleTrigger className="flex w-full flex-col items-start justify-start gap-2">
-                  <div className="flex h-full w-full items-center justify-start lg:text-2xl">
+                  <div className="flex h-full w-full items-center justify-start lg:text-xl">
                     {"Write Something"}
                   </div>
                 </CollapsibleTrigger>
@@ -213,11 +213,14 @@ export default function PostForm() {
                     control={form.control}
                     name="categoryId"
                     render={({ field }) => (
-                      <FormItem className="flex w-fit items-center gap-4">
+                      <FormItem className="flex w-fit flex-wrap items-center gap-4">
                         <FormLabel>Category</FormLabel>
                         <Select onValueChange={field.onChange}>
                           <SelectTrigger className="w-fit gap-4 px-4">
-                            <SelectValue placeholder="Select Category" />
+                            <SelectValue
+                              className="text-sm lg:text-base"
+                              placeholder="Select Category"
+                            />
                           </SelectTrigger>
                           <SelectContent className="">
                             {postCategory?.map((category) => (
