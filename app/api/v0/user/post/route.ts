@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     const pageNumber = Number(req.nextUrl.searchParams.get("page")) || 1;
     const categoryId = req.nextUrl.searchParams.get("categoryId");
     // console.log("-------------GET /user/post -------------");
-
+    const startTime = performance.now();
     const where =
       categoryId && categoryId !== "undefined" ? { categoryId } : undefined;
 
@@ -51,8 +51,6 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    const middleTime = performance.now();
-
     const transformedPosts = posts.map(({ _count, ...post }) => ({
       ...post,
       likes: _count.likes,
@@ -68,9 +66,7 @@ export async function GET(req: NextRequest) {
     }));
 
     const endTime = performance.now();
-    console.log(
-      `Time taken to transform posts: ${endTime - middleTime} milliseconds`,
-    );
+    console.log(`Time taken : ${endTime - startTime} milliseconds`);
 
     return NextResponse.json(transformedPosts);
   } catch (error) {

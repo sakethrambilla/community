@@ -14,6 +14,7 @@ export async function GET(req: NextRequest) {
     const like = await prisma.like.findFirst({
       where: {
         postId,
+        userId: userId || undefined,
       },
     });
 

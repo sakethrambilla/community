@@ -7,13 +7,6 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { Button } from "../ui/button";
 
-const navItems = [
-  { name: "About", href: "/about" },
-  { name: "Community", href: "/community" },
-  { name: "Testimonials", href: "/testimonials" },
-  { name: "Courses", href: "/courses" },
-];
-
 export default function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();

@@ -11,7 +11,7 @@ import { Post } from "@/types";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { format } from "date-fns";
 import { MessageSquare, ThumbsUp } from "lucide-react";
-import { useSession } from "next-auth/react";
+
 import PostCard from "./post-card";
 
 interface PostListProps {
@@ -20,9 +20,7 @@ interface PostListProps {
 }
 
 export default function PostList({ postData, isLoading }: PostListProps) {
-  const { data: session } = useSession();
-
-  const [activePost, setActivePost] = useState<Post | undefined>(undefined);
+  const [setActivePost] = useState<Post | undefined>(undefined);
   const [open, setOpen] = useState(false);
   // console.log("POst List", postData);
   return (
@@ -44,7 +42,7 @@ export default function PostList({ postData, isLoading }: PostListProps) {
                   setActivePost={setActivePost}
                 />
               </DrawerTrigger>
-              <DrawerContent className="flex h-[80vh] flex-col gap-8 px-12">
+              <DrawerContent className="flex h-[80vh] flex-col gap-4 px-4 lg:gap-8 lg:px-12">
                 <DialogTitle></DialogTitle>
                 <PostCard post={post} />
               </DrawerContent>
@@ -67,7 +65,7 @@ function PostListCard({ post, setActivePost }: PostCardProps) {
   }
   return (
     <div
-      className="flex w-full flex-col gap-2 rounded-2xl border px-8 py-4"
+      className="flex w-full flex-col gap-2 rounded-2xl border px-4 py-2 text-start lg:px-8 lg:py-4"
       onClick={handlePostClick}
     >
       {/* User Info */}
@@ -79,7 +77,7 @@ function PostListCard({ post, setActivePost }: PostCardProps) {
           <AvatarFallback>{post.user.name?.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="flex w-full flex-col">
-          <p className=" ">{post.user.name}</p>
+          <p className="">{post.user.name}</p>
           <p className="text-sm text-gray-500">{post.user.profession}</p>
           <p className="text-sm text-muted-foreground">{post.category}</p>
         </div>

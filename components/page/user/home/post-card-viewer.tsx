@@ -4,7 +4,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { Post } from "@/types";
 import { CircleArrowLeft, CircleArrowRight } from "lucide-react";
-import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import PostCard from "./post-card";
 
@@ -18,7 +17,6 @@ export default function PostCardViewer({
   isLoading,
 }: PostCardViewerProps) {
   const { toast } = useToast();
-  const { data: session } = useSession();
   const [activePostIndex, setActivePostIndex] = useState<number>(0);
 
   function handleNextPost() {

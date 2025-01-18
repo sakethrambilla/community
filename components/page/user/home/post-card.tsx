@@ -10,6 +10,12 @@ import {
   useGetLikeQuery,
 } from "@/redux/features/shared/like/api";
 import { Post } from "@/types/user/post";
+import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
+import Underline from "@tiptap/extension-underline";
+import Youtube from "@tiptap/extension-youtube";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
@@ -24,12 +30,53 @@ export default function PostCard({ post }: PostCardProps) {
     postId: post?.id || "",
     userId: session?.user.id || "",
   });
-  console.log("POST Like", likeData);
   const [createLike, { isLoading: isCreateLikeLoading }] =
     useCreateLikeMutation();
   const [deleteLike, { isLoading: isDeleteLikeLoading }] =
     useDeleteLikeMutation();
-  console.log("likeData", likeData);
+
+  const editor = useEditor({
+    editable: false,
+    editorProps: {
+      attributes: {
+        class:
+          " prose-sm min-h-[150px] max-h-[450px] w-full rounded-md  bg-transparent border-b-0 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 overflow-auto",
+      },
+    },
+    extensions: [
+      Placeholder.configure({
+        placeholder: "Content",
+        emptyEditorClass:
+          "cursor-text  before:content-[attr(data-placeholder)] before:text-mds before:absolute before:top-2 before:left-4 before:text-mauve-11 before:opacity-50 before-pointer-events-none",
+      }),
+      StarterKit.configure({
+        orderedList: {
+          HTMLAttributes: {
+            class: "list-decimal pl-4",
+          },
+        },
+        bulletList: {
+          HTMLAttributes: {
+            class: "list-disc pl-4",
+          },
+        },
+      }),
+      Youtube.configure({
+        allowFullscreen: false,
+        HTMLAttributes: {
+          class: "prose-sm w-80 h-64 lg:w-full lg:h-auto",
+        },
+      }),
+      Link.configure({
+        HTMLAttributes: {
+          class: "text-blue-700 dark:text-blue-300 underline",
+        },
+      }),
+      Underline,
+    ],
+    content: post?.content || "",
+  });
+
   const handleLike = async () => {
     if (!post) return;
 
@@ -91,8 +138,7 @@ export default function PostCard({ post }: PostCardProps) {
           <div className="text-primary lg:text-lg xl:text-xl 2xl:text-2xl">
             {post.title}
           </div>
-
-          <p dangerouslySetInnerHTML={{ __html: post.content }} />
+          <EditorContent editor={editor} className="prose-sm" />
         </div>
       </div>
 
