@@ -72,7 +72,7 @@ export default function UserDashboardSidebar() {
   }
 
   return (
-    <div className="sticky left-0 top-0 flex h-screen flex-col items-center justify-between px-1 py-4 md:px-4 md:py-8 lg:py-8">
+    <div className="sticky left-0 top-0 flex h-screen flex-col items-center justify-between px-2 py-4 md:px-4 md:py-8 lg:py-8">
       <div className="flex flex-col items-center justify-start gap-8 lg:gap-8 2xl:gap-24">
         {/* Logo */}
         <div className="flex items-center justify-center rounded-full bg-sidebar-primary p-4 text-sidebar-primary-foreground">

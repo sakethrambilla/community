@@ -1,24 +1,27 @@
 "use client";
 
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetUserPostsQuery } from "@/redux/features/shared/post/api";
 import { useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { htmlToText } from "@/lib/utils";
-import { Post } from "@/types/user/post";
+
+import { Post } from "@/types";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { format } from "date-fns";
 import { MessageSquare, ThumbsUp } from "lucide-react";
 import { useSession } from "next-auth/react";
 import PostCard from "./post-card";
 
-export default function PostList() {
+interface PostListProps {
+  postData: Post[];
+  isLoading: boolean;
+}
+
+export default function PostList({ postData, isLoading }: PostListProps) {
   const { data: session } = useSession();
-  const { data: postData, isLoading } = useGetUserPostsQuery({
-    userId: session?.user.id || "",
-  });
+
   const [activePost, setActivePost] = useState<Post | undefined>(undefined);
   const [open, setOpen] = useState(false);
   // console.log("POst List", postData);
@@ -32,32 +35,21 @@ export default function PostList() {
         </div>
       ) : (
         <>
-          {!postData || postData?.length === 0 ? (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-4 pt-4 2xl:pt-12">
-              <p className="text-xl 2xl:text-3xl">
-                Sorry, there are no community posts yet.
-              </p>
-              <p className="font-nippo text-[12rem] text-muted-foreground 2xl:text-[15rem]">
-                404
-              </p>
-            </div>
-          ) : (
-            postData?.map((post, index) => (
-              <Drawer key={index} open={open} onOpenChange={setOpen}>
-                <DrawerTrigger>
-                  <PostListCard
-                    post={post}
-                    key={post.id}
-                    setActivePost={setActivePost}
-                  />
-                </DrawerTrigger>
-                <DrawerContent className="flex h-[80vh] flex-col gap-8 px-12">
-                  <DialogTitle></DialogTitle>
-                  <PostCard post={activePost} />
-                </DrawerContent>
-              </Drawer>
-            ))
-          )}
+          {postData?.map((post, index) => (
+            <Drawer key={index} open={open} onOpenChange={setOpen}>
+              <DrawerTrigger>
+                <PostListCard
+                  post={post}
+                  key={post.id}
+                  setActivePost={setActivePost}
+                />
+              </DrawerTrigger>
+              <DrawerContent className="flex h-[80vh] flex-col gap-8 px-12">
+                <DialogTitle></DialogTitle>
+                <PostCard post={post} />
+              </DrawerContent>
+            </Drawer>
+          ))}
         </>
       )}
     </div>

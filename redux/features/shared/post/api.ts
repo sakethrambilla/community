@@ -15,8 +15,15 @@ export const postApi = createApi({
       query: (id) => `admin/post/${id}`,
       providesTags: ["AdminPost"],
     }),
-    getUserPosts: builder.query<Post[], { userId: string }>({
-      query: ({ userId }) => `user/post?userId=${userId}`,
+    getUserPosts: builder.query<
+      Post[],
+      {
+        categoryId?: string;
+        page: number;
+      }
+    >({
+      query: ({ categoryId, page }) =>
+        `user/post?categoryId=${categoryId}&page=${page}`,
       providesTags: ["UserPost"],
     }),
     getUserPost: builder.query<Post, string>({

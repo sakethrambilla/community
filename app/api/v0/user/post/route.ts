@@ -1,34 +1,62 @@
 import { prisma } from "@/lib/db";
 import { createPostSchema, deleteSchema } from "@/schema";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-export async function GET() {
+const PAGE_SIZE = 10;
+
+export async function GET(req: NextRequest) {
   try {
+    const pageNumber = Number(req.nextUrl.searchParams.get("page")) || 1;
+    const categoryId = req.nextUrl.searchParams.get("categoryId");
     // console.log("-------------GET /user/post -------------");
 
+    const where =
+      categoryId && categoryId !== "undefined" ? { categoryId } : undefined;
+
     const posts = await prisma.post.findMany({
-      include: {
-        user: true,
-        category: true,
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        createdAt: true,
+        updatedAt: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            image: true,
+          },
+        },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
         _count: {
           select: {
             likes: true,
+            comments: true,
           },
         },
-        comments: true,
       },
+      where,
+      skip: (pageNumber - 1) * PAGE_SIZE,
+      take: PAGE_SIZE,
+
       orderBy: {
         createdAt: "desc",
       },
     });
 
-    // console.log("posts", posts);
+    const middleTime = performance.now();
 
-    const transformedPosts = posts.map(({ comments, _count, ...post }) => ({
+    const transformedPosts = posts.map(({ _count, ...post }) => ({
       ...post,
       likes: _count.likes,
-      comments: comments.length || 0,
+      comments: _count.comments,
       category: post.category.name,
       categoryId: post.category.id,
       user: {
@@ -38,6 +66,11 @@ export async function GET() {
         image: post.user.image,
       },
     }));
+
+    const endTime = performance.now();
+    console.log(
+      `Time taken to transform posts: ${endTime - middleTime} milliseconds`,
+    );
 
     return NextResponse.json(transformedPosts);
   } catch (error) {

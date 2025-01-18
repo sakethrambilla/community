@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/db";
 import { createLikeSchema, deleteSchema } from "@/schema";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -13,7 +14,6 @@ export async function GET(req: NextRequest) {
     const like = await prisma.like.findFirst({
       where: {
         postId,
-        userId,
       },
     });
 

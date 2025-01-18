@@ -1,12 +1,11 @@
 "use client";
-import Link from "next/link";
-import React, { useRef, useState } from "react";
-import { Button } from "../ui/button";
-import { useTheme } from "next-themes";
-import { Menu, SunIcon, X } from "lucide-react";
-import { MoonIcon } from "lucide-react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { Menu, MoonIcon, SunIcon, X } from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { useRef, useState } from "react";
+import { Button } from "../ui/button";
 
 const navItems = [
   { name: "About", href: "/about" },
@@ -47,13 +46,13 @@ export default function MainNavbar() {
           <Link href="/" className="font-nippo text-lg md:text-xl lg:text-2xl">
             C.SRB
           </Link>
-          <div className="hidden items-center gap-8 text-sm lg:flex">
+          {/* <div className="hidden items-center gap-8 text-sm lg:flex">
             {navItems.map((item) => (
               <Link href={item.href} key={item.name}>
                 {item.name}
               </Link>
             ))}
-          </div>
+          </div> */}
           <div className="flex items-center gap-4">
             <Button className="hidden lg:flex">
               <Link href="/login" className="font-semibold uppercase">
@@ -79,7 +78,7 @@ export default function MainNavbar() {
         className="nav absolute left-0 top-0 z-40 h-screen w-full bg-background px-8 py-32 text-foreground"
       >
         <div className="flex flex-col gap-8 text-lg">
-          {navItems.map((item) => (
+          {/* {navItems.map((item) => (
             <Link
               href={item.href}
               key={item.name}
@@ -88,7 +87,7 @@ export default function MainNavbar() {
             >
               {item.name}
             </Link>
-          ))}
+          ))} */}
           <Link href="/login" onClick={() => setIsOpen(false)} className="">
             <Button variant="default" className="w-full py-7 text-lg">
               Register
