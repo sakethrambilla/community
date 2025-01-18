@@ -15,8 +15,8 @@ export const postApi = createApi({
       query: (id) => `admin/post/${id}`,
       providesTags: ["AdminPost"],
     }),
-    getUserPosts: builder.query<Post[], void>({
-      query: () => `user/post`,
+    getUserPosts: builder.query<Post[], { userId: string }>({
+      query: ({ userId }) => `user/post?userId=${userId}`,
       providesTags: ["UserPost"],
     }),
     getUserPost: builder.query<Post, string>({

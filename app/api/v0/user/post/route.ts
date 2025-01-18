@@ -5,12 +5,17 @@ import { z } from "zod";
 
 export async function GET() {
   try {
-    console.log("-------------GET /user/post -------------");
+    // console.log("-------------GET /user/post -------------");
 
     const posts = await prisma.post.findMany({
       include: {
         user: true,
         category: true,
+        _count: {
+          select: {
+            likes: true,
+          },
+        },
         comments: true,
       },
       orderBy: {
@@ -20,9 +25,10 @@ export async function GET() {
 
     // console.log("posts", posts);
 
-    const transformedPosts = posts.map((post) => ({
+    const transformedPosts = posts.map(({ comments, _count, ...post }) => ({
       ...post,
-      comments: post.comments.length || 0,
+      likes: _count.likes,
+      comments: comments.length || 0,
       category: post.category.name,
       categoryId: post.category.id,
       user: {

@@ -19,6 +19,7 @@ model User {
   sessions      Session[]
   posts         Post[]
   comments      Comment[]
+  likes         Like[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -93,10 +94,11 @@ model Post {
   pinned Boolean @default(false)
   categoryId String
   category   PostCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  likes     Int      @default(0)
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes     Like[]
   comments  Comment[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -104,11 +106,23 @@ model Post {
 model Comment {
   id        String   @id @default(cuid())
   content   String
-  likes     Int      @default(0)
+  likes     Like[]
   postId    String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    String?
+  post      Post?     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  commentId String?
+  comment   Comment?  @relation(fields: [commentId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

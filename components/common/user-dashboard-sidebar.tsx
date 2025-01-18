@@ -34,27 +34,27 @@ import {
 const items = [
   {
     icon: Users,
-    url: "/dashboard",
+    url: "/user",
   },
   {
     icon: BookOpen,
-    url: "/dashboard/classroom",
+    url: "/user/classroom",
   },
   {
     icon: MessageCircleQuestion,
-    url: "/dashboard/ask-me-anything",
+    url: "/user/ask-me-anything",
   },
   {
     icon: Lightbulb,
-    url: "/dashboard/project-ideas",
+    url: "/user/project-ideas",
   },
   {
     icon: Code,
-    url: "/dashboard/code-with-peers",
+    url: "/user/code-with-peers",
   },
   {
     icon: Brain,
-    url: "/dashboard/weekly-catchup",
+    url: "/user/weekly-catchup",
   },
 ];
 
@@ -72,7 +72,7 @@ export default function UserDashboardSidebar() {
   }
 
   return (
-    <div className="sticky left-0 top-0 flex h-screen flex-col items-center justify-between px-1 py-4 md:px-4 md:py-8 lg:p-8">
+    <div className="sticky left-0 top-0 flex h-screen flex-col items-center justify-between px-1 py-4 md:px-4 md:py-8 lg:py-8">
       <div className="flex flex-col items-center justify-start gap-8 lg:gap-8 2xl:gap-24">
         {/* Logo */}
         <div className="flex items-center justify-center rounded-full bg-sidebar-primary p-4 text-sidebar-primary-foreground">
@@ -106,9 +106,9 @@ export default function UserDashboardSidebar() {
           onClick={handleThemeChange}
         >
           {theme === "dark" ? (
-            <Sun className="size-4 xl:size-5 2xl:size-6" />
+            <Sun className="size-4 transition-all duration-500 xl:size-5 2xl:size-6" />
           ) : (
-            <Moon className="size-4 xl:size-5 2xl:size-6" />
+            <Moon className="size-4 transition-all duration-500 xl:size-5 2xl:size-6" />
           )}
         </div>
         {/* Logout */}
@@ -116,7 +116,7 @@ export default function UserDashboardSidebar() {
           className="flex cursor-pointer items-center justify-center rounded-full p-4 transition-all duration-300 hover:scale-125"
           onClick={handleSignOut}
         >
-          <LogOut className="size-4 xl:size-5 2xl:size-6" />
+          <LogOut className="size-4 transition-all duration-500 xl:size-5 2xl:size-6" />
         </div>
 
         {/* User */}

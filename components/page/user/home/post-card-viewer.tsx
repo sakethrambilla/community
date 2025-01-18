@@ -4,13 +4,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { useGetUserPostsQuery } from "@/redux/features/shared/post/api";
 import { CircleArrowLeft, CircleArrowRight } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useState } from "react";
 import PostCard from "./post-card";
-
 export default function PostCardViewer() {
   const { toast } = useToast();
+  const { data: session } = useSession();
   const [activePostIndex, setActivePostIndex] = useState<number>(0);
-  const { data: postData, isLoading } = useGetUserPostsQuery();
+  const { data: postData, isLoading } = useGetUserPostsQuery({
+    userId: session?.user.id || "",
+  });
 
   function handleNextPost() {
     if (postData && activePostIndex === postData.length - 1) {
@@ -58,9 +61,13 @@ export default function PostCardViewer() {
     <div className="flex h-full w-full flex-row items-center gap-4">
       {isLoading && <Skeleton className="h-48 w-full rounded-2xl" />}
       {!postData || postData?.length === 0 ? (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-4 pt-12">
-          <p className="text-3xl">Sorry, there are no community posts yet.</p>
-          <p className="font-nippo text-[15rem] text-muted-foreground">404</p>
+        <div className="flex h-full w-full flex-col items-center justify-center gap-4 pt-4 2xl:pt-12">
+          <p className="text-xl 2xl:text-3xl">
+            Sorry, there are no community posts yet.
+          </p>
+          <p className="font-nippo text-[12rem] text-muted-foreground 2xl:text-[15rem]">
+            404
+          </p>
         </div>
       ) : (
         <>

@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ChartNoAxesCombined, CirclePlay, ShieldCheck } from "lucide-react";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 export default function Header() {
   const { theme } = useTheme();
@@ -30,13 +31,15 @@ export default function Header() {
       </p>
       <div className="flex w-full flex-col items-start justify-center gap-4 lg:w-fit">
         <div className="flex w-full flex-col items-start justify-start gap-4 md:flex-row lg:items-center">
-          <Button
-            size={"lg"}
-            className="flex w-full items-center gap-2 md:w-fit"
-          >
-            <ChartNoAxesCombined />
-            Career growth starts here
-          </Button>
+          <Link href={"/login"}>
+            <Button
+              size={"lg"}
+              className="flex w-full items-center gap-2 md:w-fit"
+            >
+              <ChartNoAxesCombined />
+              Career growth starts here
+            </Button>
+          </Link>
           <Button
             size={"lg"}
             variant={"outline"}

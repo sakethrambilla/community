@@ -9,7 +9,10 @@ import { useState } from "react";
 export default function Page() {
   const [toggle, setToggle] = useState<boolean>(false);
   return (
-    <main className="flex h-full w-full flex-col items-start justify-start gap-8 p-2 md:p-4 lg:p-8">
+    <main className="flex h-full w-full flex-col items-start justify-start gap-4 p-2 md:p-4 lg:py-8 xl:gap-6 2xl:gap-8">
+      <h1 className="font-nippo text-4xl xl:text-5xl 2xl:text-6xl">
+        Community Posts
+      </h1>
       {/* Add Post */}
       <PostForm />
 

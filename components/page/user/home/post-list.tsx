@@ -11,10 +11,14 @@ import { Post } from "@/types/user/post";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { format } from "date-fns";
 import { MessageSquare, ThumbsUp } from "lucide-react";
+import { useSession } from "next-auth/react";
 import PostCard from "./post-card";
 
 export default function PostList() {
-  const { data: postData, isLoading } = useGetUserPostsQuery();
+  const { data: session } = useSession();
+  const { data: postData, isLoading } = useGetUserPostsQuery({
+    userId: session?.user.id || "",
+  });
   const [activePost, setActivePost] = useState<Post | undefined>(undefined);
   const [open, setOpen] = useState(false);
   // console.log("POst List", postData);
@@ -29,12 +33,11 @@ export default function PostList() {
       ) : (
         <>
           {!postData || postData?.length === 0 ? (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-4 pt-12">
-              <p className="text-3xl">
+            <div className="flex h-full w-full flex-col items-center justify-center gap-4 pt-4 2xl:pt-12">
+              <p className="text-xl 2xl:text-3xl">
                 Sorry, there are no community posts yet.
               </p>
-
-              <p className="font-nippo text-[15rem] text-muted-foreground">
+              <p className="font-nippo text-[12rem] text-muted-foreground 2xl:text-[15rem]">
                 404
               </p>
             </div>
@@ -90,7 +93,9 @@ function PostListCard({ post, setActivePost }: PostCardProps) {
         </div>
       </div>
       <div className="flex w-full flex-col items-start gap-0">
-        <div className="text-2xl text-primary">{post.title}</div>
+        <div className="text-primary lg:text-lg xl:text-2xl 2xl:text-2xl">
+          {post.title}
+        </div>
         <p
           className="text-muted-foreground"
           dangerouslySetInnerHTML={{

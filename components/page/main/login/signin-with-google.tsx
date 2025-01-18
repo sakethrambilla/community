@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
-import React from "react";
 import { FcGoogle } from "react-icons/fc";
 export default function SignInWithGoogle() {
   return (
@@ -9,7 +8,7 @@ export default function SignInWithGoogle() {
       variant={"outline"}
       className="flex w-1/2 items-center justify-center gap-2 border border-muted py-6 lg:py-7 lg:text-lg xl:text-xl"
       onClick={() => {
-        signIn("google", { callbackUrl: "/dashboard" });
+        signIn("google", { callbackUrl: "/user" });
       }}
     >
       <FcGoogle
