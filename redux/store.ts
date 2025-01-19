@@ -1,10 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
+import courseApi from "./features/admin/course/api";
 import { commentApi } from "./features/shared/comment/api";
+import { courseCategoryApi } from "./features/shared/course-category/api";
 import { likeApi } from "./features/shared/like/api";
 import { postCategoryApi } from "./features/shared/post-category/api";
 import { postApi } from "./features/shared/post/api";
 import { postViewSlice } from "./features/user/post-toggle/slice";
 import { userDetailsApi } from "./user-details/api";
+
 export const store = configureStore({
   reducer: {
     [postApi.reducerPath]: postApi.reducer,
@@ -12,6 +15,8 @@ export const store = configureStore({
     [userDetailsApi.reducerPath]: userDetailsApi.reducer,
     [commentApi.reducerPath]: commentApi.reducer,
     [likeApi.reducerPath]: likeApi.reducer,
+    [courseApi.reducerPath]: courseApi.reducer,
+    [courseCategoryApi.reducerPath]: courseCategoryApi.reducer,
     postView: postViewSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -21,6 +26,8 @@ export const store = configureStore({
       userDetailsApi.middleware,
       commentApi.middleware,
       likeApi.middleware,
+      courseApi.middleware,
+      courseCategoryApi.middleware,
     ),
   devTools: process.env.NODE_ENV !== "production",
 });

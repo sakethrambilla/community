@@ -32,12 +32,14 @@ import { useGetPostCategoryQuery } from "@/redux/features/shared/post-category/a
 import { useCreatePostMutation } from "@/redux/features/shared/post/api";
 import { createPostSchema, CreatePostSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import Youtube from "@tiptap/extension-youtube";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 

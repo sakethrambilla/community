@@ -80,10 +80,10 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
   try {
-    const responseBody = await req.json();
-    console.log("Post Post body", responseBody);
+    const requestBody = await req.json();
+    console.log("Post Post body", requestBody);
     const { title, body, userId, categoryId } =
-      createPostSchema.parse(responseBody);
+      createPostSchema.parse(requestBody);
 
     if (!userId) {
       return NextResponse.json(

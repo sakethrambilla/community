@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db";
 
-const postCategory = [
+const courseCategory = [
   {
     name: "Frontend Development",
     slug: "frontend-development",
@@ -47,11 +47,11 @@ const postCategory = [
   },
 ];
 
-const seedPostCategory = async () => {
-  const response = await prisma.postCategory.createMany({
-    data: postCategory,
+const seedCourseCategory = async () => {
+  const response = await prisma.courseCategory.createMany({
+    data: courseCategory,
   });
   console.log(response);
 };
 
-seedPostCategory();
+seedCourseCategory();

@@ -170,23 +170,21 @@ model Course{
   id String @id @default(cuid())
   title String
   description String
+  coverImage String
   categoryId String
-  accessType AccessType @default(FREE)
-  category   CourseCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  accessType AccessType @default(PREMIUM)
   published Boolean @default(false)
+  category   CourseCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   courseAccess CourseAccess[]
-  courseClasses CourseClass[]
+  courseModules CourseModule[]
+  courseTopics CourseTopic[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
-enum AccessType {
+ enum AccessType {
   FREE
   PREMIUM
 }
-
-
-
 
 
 model CourseCategory {
@@ -208,13 +206,27 @@ model CourseAccess{
   updatedAt DateTime @updatedAt
 }
 
-model CourseClass{
+model CourseModule{
   id String @id @default(cuid())
   title String
   description String
   courseId String
   course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseTopics CourseTopic[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CourseTopic{
+  id String @id @default(cuid())
+  title String
   videoUrl String
+  body String
+  courseId String
+  isModule Boolean @default(false)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseModuleId String?
+  courseModule CourseModule? @relation(fields: [courseModuleId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

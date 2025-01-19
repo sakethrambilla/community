@@ -5,10 +5,10 @@ import { z } from "zod";
 
 export async function POST(req: Request) {
   try {
-    const responseBody = await req.json();
+    const requestBody = await req.json();
 
     const { title, body, userId, categoryId } =
-      createPostSchema.parse(responseBody);
+      createPostSchema.parse(requestBody);
 
     if (!userId || !categoryId) {
       return NextResponse.json(

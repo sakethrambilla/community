@@ -53,9 +53,9 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const responseBody = await request.json();
+    const requestBody = await request.json();
 
-    const { body, postId, userId } = createCommentSchema.parse(responseBody);
+    const { body, postId, userId } = createCommentSchema.parse(requestBody);
 
     const post = await prisma.post.findUnique({
       where: {
@@ -105,10 +105,10 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const responseBody = await request.json();
+    const requestBody = await request.json();
     console.log("------- PATCH /v0/shared/comment -------");
     // console.dir(responseBody, { depth: null });
-    const { id, body } = updateCommentSchema.parse(responseBody);
+    const { id, body } = updateCommentSchema.parse(requestBody);
 
     const comment = await prisma.comment.findUnique({
       where: { id },
