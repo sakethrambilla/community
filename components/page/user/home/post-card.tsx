@@ -84,14 +84,14 @@ export default function PostCard({ post }: PostCardProps) {
       }),
       Underline,
     ],
-    content: post?.content || "",
+    content: post?.body || "",
   });
 
   useEffect(() => {
-    if (editor && post?.content) {
-      editor.commands.setContent(post.content);
+    if (editor && post?.body) {
+      editor.commands.setContent(post.body);
     }
-  }, [post?.content, editor]);
+  }, [post?.body, editor]);
   const handleLike = async () => {
     if (!post) return;
 

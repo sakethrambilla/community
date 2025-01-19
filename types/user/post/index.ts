@@ -1,7 +1,7 @@
 export type Post = {
   id: string;
   title: string;
-  content: string;
+  body: string;
   image: string;
   likes: number;
   pinned: boolean;

@@ -89,7 +89,7 @@ function PostListCard({ post, setActivePost }: PostCardProps) {
         <p
           className="text-sm text-muted-foreground"
           dangerouslySetInnerHTML={{
-            __html: `${htmlToText(post.content).substring(0, 200)}...`,
+            __html: `${htmlToText(post.body).substring(0, 200)}...`,
           }}
         />
       </div>
