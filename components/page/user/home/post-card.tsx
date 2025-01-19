@@ -92,6 +92,7 @@ export default function PostCard({ post }: PostCardProps) {
       editor.commands.setContent(post.body);
     }
   }, [post?.body, editor]);
+
   const handleLike = async () => {
     if (!post) return;
 

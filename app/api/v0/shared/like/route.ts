@@ -48,7 +48,22 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { userId, postId, commentId } = createLikeSchema.parse(body);
     console.log("-------------POST /shared/like -------------");
-    // console.log("body", body);
+    console.log("body", body);
+
+    if (!userId) {
+      return NextResponse.json(
+        { message: "Invalid request userId is required" },
+        { status: 400 },
+      );
+    }
+
+    const existingUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!existingUser) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
 
     // Validate that either postId or commentId is provided
     if (!postId && !commentId) {
@@ -57,6 +72,17 @@ export async function POST(req: NextRequest) {
 
     // Create a like for a post if postId is provided
     if (postId) {
+      const existingPost = await prisma.post.findUnique({
+        where: { id: postId },
+      });
+
+      if (!existingPost) {
+        return NextResponse.json(
+          { message: "Post not found" },
+          { status: 404 },
+        );
+      }
+
       await prisma.like.create({
         data: {
           userId,
@@ -67,6 +93,17 @@ export async function POST(req: NextRequest) {
 
     // Create a like for a comment if commentId is provided
     if (commentId) {
+      const existingComment = await prisma.comment.findUnique({
+        where: { id: commentId },
+      });
+
+      if (!existingComment) {
+        return NextResponse.json(
+          { message: "Comment not found" },
+          { status: 404 },
+        );
+      }
+
       await prisma.like.create({
         data: {
           userId,
