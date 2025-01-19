@@ -24,27 +24,27 @@ const items = [
   },
   {
     name: "Classroom",
-    url: "/dashboard/classroom",
+    url: "/admin/classroom",
     icon: BookOpen,
   },
   {
     name: "Ask me anything",
-    url: "/dashboard/ask-me-anything",
+    url: "/admin/ask-anything",
     icon: MessageCircleQuestion,
   },
   {
     name: "Project Ideas",
-    url: "/dashboard/project-ideas",
+    url: "/admin/project-ideas",
     icon: Lightbulb,
   },
   {
     name: "Code with peers",
-    url: "/dashboard/code-with-peers",
+    url: "/admin/code-with-peers",
     icon: Code,
   },
   {
     name: "Weekly Catchup",
-    url: "/dashboard/weekly-catchup",
+    url: "/admin/weekly-catchup",
     icon: Brain,
   },
 ];

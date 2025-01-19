@@ -16,7 +16,9 @@ import {
 } from "@/components/ui/sidebar";
 import { NavItems } from "./nav-items";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AdminSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

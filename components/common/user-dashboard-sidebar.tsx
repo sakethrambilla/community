@@ -1,17 +1,13 @@
 "use client";
 import { cn } from "@/lib/utils";
 import {
-  BadgeCheck,
-  Bell,
   BookOpen,
   Brain,
   Code,
-  CreditCard,
   Lightbulb,
   LogOut,
   MessageCircleQuestion,
   Moon,
-  Sparkles,
   Sun,
   Users,
 } from "lucide-react";
@@ -20,15 +16,6 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 
 const items = [
   {
@@ -79,7 +66,7 @@ export default function UserDashboardSidebar({
   return (
     <div
       className={cn(
-        "sticky left-0 top-32 h-full flex-col items-center justify-between gap-8 px-2 py-4 transition-all duration-500 ease-in-out md:top-0 md:flex md:gap-16 md:px-4 md:py-8 lg:py-8",
+        "sticky left-0 top-32 h-full flex-col items-center justify-between gap-8 px-2 py-4 transition-all duration-500 ease-in-out md:top-0 md:flex md:gap-16 md:px-4 md:py-8 lg:py-8 2xl:h-[90vh]",
         isSidebarOpen ? "flex" : "hidden",
       )}
     >
@@ -125,75 +112,14 @@ export default function UserDashboardSidebar({
         </div>
 
         {/* User */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Avatar className="size-12 rounded-full xl:size-14 2xl:size-16">
-              <AvatarImage
-                src={session?.user?.image || "https://github.com/shadcn.png"}
-                alt={session?.user?.name ?? "CSRB"}
-              />
-              <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className="ml-20 w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg lg:ml-24"
-            align="end"
-            sideOffset={4}
-          >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage
-                    src={
-                      session?.user?.image
-                        ? session.user.image
-                        : "https://github.com/shadcn.png"
-                    }
-                    alt={session?.user?.name ?? "CSRB"}
-                  />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">
-                    {session?.user?.name}
-                  </span>
-                  <span className="truncate text-xs">
-                    {session?.user?.email}
-                  </span>
-                </div>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <Link href="/dashboard/account">
-                <DropdownMenuItem>
-                  <BadgeCheck />
-                  Account
-                </DropdownMenuItem>
-              </Link>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleSignOut}>
-              <LogOut />
-              Log out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+
+        <Avatar className="size-12 rounded-full xl:size-14 2xl:size-16">
+          <AvatarImage
+            src={session?.user?.image || "https://github.com/shadcn.png"}
+            alt={session?.user?.name ?? "CSRB"}
+          />
+          <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+        </Avatar>
       </div>
     </div>
   );

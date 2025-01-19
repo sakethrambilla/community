@@ -12,7 +12,7 @@ model User {
   name          String
   email         String          @unique
   emailVerified DateTime?
-  role          String          @default("user")
+  role          UserRole          @default(USER)
   image         String?
   userDetail   UserDetail?  
   accounts      Account[]
@@ -20,8 +20,13 @@ model User {
   posts         Post[]
   comments      Comment[]
   likes         Like[]
+  courseAccess CourseAccess[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+enum UserRole {
+  ADMIN
+  USER
 }
 
 model UserDetail {
@@ -155,6 +160,61 @@ model QuestionCategory {
   name      String
   slug      String
   questions Question[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+
+model Course{
+  id String @id @default(cuid())
+  title String
+  description String
+  categoryId String
+  accessType AccessType @default(FREE)
+  category   CourseCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  published Boolean @default(false)
+  courseAccess CourseAccess[]
+  courseClasses CourseClass[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum AccessType {
+  FREE
+  PREMIUM
+}
+
+
+
+
+
+model CourseCategory {
+  id String @id @default(cuid())
+  name String
+  slug String
+  courses Course[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CourseAccess{
+  id String @id @default(cuid())
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  courseId String
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CourseClass{
+  id String @id @default(cuid())
+  title String
+  description String
+  courseId String
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  videoUrl String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
