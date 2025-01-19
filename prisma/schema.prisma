@@ -90,7 +90,7 @@ model PostCategory {
 model Post {
   id        String   @id @default(cuid())
   title     String
-  content   String
+  body   String
   pinned Boolean @default(false)
   categoryId String
   category   PostCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -105,7 +105,13 @@ model Post {
 
 model Comment {
   id        String   @id @default(cuid())
-  content   String
+  body   String
+  questionId String?
+  question Question? @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  children Comment[] @relation("comment_children")
+  parent   Comment?  @relation("comment_children", fields: [parentId], references: [id])
+  parentId String?
   likes     Like[]
   postId    String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
@@ -132,4 +138,23 @@ enum Status {
   PENDING
   ACCEPTED
   REJECTED
+}
+
+model Question {
+  id        String   @id @default(cuid())
+  body   String
+  categoryId String
+  category   QuestionCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  comments Comment[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model QuestionCategory {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String
+  questions Question[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

@@ -19,7 +19,7 @@ export default function UserDashboardNavbar({
 }: UserDashboardNavbarProps) {
   const { data: session } = useSession();
   return (
-    <div className="sticky left-0 top-0 z-50 flex w-full items-start justify-between gap-8 bg-background px-2 py-4 md:px-4 md:py-8 lg:flex-row">
+    <div className="sticky left-0 top-0 z-50 w-full items-start justify-between gap-8 bg-background px-2 py-4 md:px-4 md:py-8 lg:static lg:flex lg:flex-row">
       <div className="flex items-center justify-start gap-12">
         {/* Logo */}
         <div

@@ -5,7 +5,7 @@ const postSchema = baseSchema.extend({
     .string()
     .min(15, "Title must be at least 15 characters")
     .max(200, "Title must be at most 200 characters"),
-  content: z
+  body: z
     .string()
     .min(10, "Content must be at least 100 characters")
     .max(1000, "Content must be at most 1000 characters"),

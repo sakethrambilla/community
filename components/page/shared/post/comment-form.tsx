@@ -28,7 +28,7 @@ export default function CommentForm({ postId }: CommentFormProps) {
   const [createComment, { isLoading }] = useCreateCommentMutation();
   const form = useForm<CreateCommentSchema>({
     resolver: zodResolver(createCommentSchema),
-    defaultValues: { content: "", postId, userId: session?.user.id || "" },
+    defaultValues: { body: "", postId, userId: session?.user.id || "" },
   });
 
   const onSubmit = (data: CreateCommentSchema) => {
@@ -72,7 +72,7 @@ export default function CommentForm({ postId }: CommentFormProps) {
           </Avatar>
           <FormField
             control={form.control}
-            name="content"
+            name="body"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl className="w-full">
@@ -88,7 +88,7 @@ export default function CommentForm({ postId }: CommentFormProps) {
             )}
           />
 
-          {form.watch("content") && (
+          {form.watch("body") && (
             <div className="flex w-fit items-center justify-end gap-2">
               {isLoading ? (
                 <Button type="submit">

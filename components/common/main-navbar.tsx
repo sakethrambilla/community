@@ -1,7 +1,7 @@
 "use client";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { Menu, MoonIcon, SunIcon, X } from "lucide-react";
+import { MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -11,9 +11,9 @@ export default function MainNavbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const mobileMenuRef = useRef(null);
-  function handleMenu() {
-    setIsOpen(!isOpen);
-  }
+  // function handleMenu() {
+  //   setIsOpen(!isOpen);
+  // }
 
   console.log("ISOpen   ", isOpen);
 
@@ -34,8 +34,8 @@ export default function MainNavbar() {
   }, [isOpen]);
   return (
     <>
-      <div className="absolute left-0 top-0 z-50 w-full p-8 uppercase">
-        <nav className="flex items-center justify-between rounded-lg bg-foreground p-4 px-8 text-background">
+      <div className="absolute left-0 top-0 z-50 w-full px-8 py-6 uppercase lg:p-8">
+        <nav className="flex items-center justify-between rounded-lg bg-foreground p-4 text-background lg:px-8">
           <Link href="/" className="font-nippo text-lg md:text-xl lg:text-2xl">
             C.SRB
           </Link>
@@ -48,8 +48,8 @@ export default function MainNavbar() {
           </div> */}
           <div className="flex items-center gap-4">
             <Button className="hidden lg:flex">
-              <Link href="/login" className="font-semibold uppercase">
-                Register
+              <Link href="/login" className="">
+                Join
               </Link>
             </Button>
 
@@ -59,9 +59,18 @@ export default function MainNavbar() {
             >
               {theme === "dark" ? <SunIcon /> : <MoonIcon />}
             </div>
-            <div className="flex cursor-pointer lg:hidden" onClick={handleMenu}>
+
+            <Link href="/login" className=" ">
+              <Button
+                variant="default"
+                className="flex w-full py-2 text-sm lg:hidden"
+              >
+                Join
+              </Button>
+            </Link>
+            {/* <div className="flex cursor-pointer lg:hidden" onClick={handleMenu}>
               {isOpen ? <X /> : <Menu />}
-            </div>
+            </div> */}
           </div>
         </nav>
       </div>

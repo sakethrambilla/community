@@ -8,7 +8,7 @@ export default function Header() {
   const { theme } = useTheme();
   console.log("Theme", theme);
   return (
-    <section className="flex h-full min-h-screen w-full flex-col items-start justify-start gap-4 px-8 py-40">
+    <section className="flex h-full min-h-screen w-full flex-col items-start justify-start gap-4 px-8 py-36 lg:py-40">
       <h1 className="group text-start font-nippo text-4xl font-bold md:text-5xl lg:text-6xl">
         Join the{" "}
         <span className="transition-all duration-500 group-hover:text-primary group-hover:dark:text-primary">

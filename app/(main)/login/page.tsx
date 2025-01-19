@@ -1,11 +1,18 @@
+"use client";
 import SignInWithEmail from "@/components/page/main/login/signin-with-email";
 import SignInWithGithub from "@/components/page/main/login/signin-with-github";
 import SignInWithGoogle from "@/components/page/main/login/signin-with-google";
 import { Separator } from "@/components/ui/separator";
-
+import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 export default function LoginPage() {
+  const { data: session } = useSession();
+
+  if (session?.user) {
+    return redirect("/user");
+  }
   return (
     <main className="flex h-fit min-h-screen w-full items-start justify-center gap-4 overflow-hidden px-8 py-28">
       {/* Image Placeholder */}

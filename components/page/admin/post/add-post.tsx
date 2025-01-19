@@ -54,7 +54,7 @@ export default function AddPost() {
     resolver: zodResolver(createPostSchema),
     defaultValues: {
       title: "",
-      content: "",
+      body: "",
       userId: session?.user?.id || "",
     },
   });
@@ -124,7 +124,7 @@ export default function AddPost() {
     content: "",
 
     onUpdate: ({ editor }) => {
-      form.setValue("content", editor.getHTML());
+      form.setValue("body", editor.getHTML());
     },
   });
 
@@ -179,7 +179,7 @@ export default function AddPost() {
               <div className="flex flex-col gap-2">
                 <FormField
                   control={form.control}
-                  name="content"
+                  name="body"
                   render={() => (
                     <FormItem className="w-full">
                       <FormControl>

@@ -41,7 +41,7 @@ const items = [
   },
   {
     icon: MessageCircleQuestion,
-    url: "/user/ask-me-anything",
+    url: "/user/ask-anything",
   },
   {
     icon: Lightbulb,
@@ -79,7 +79,7 @@ export default function UserDashboardSidebar({
   return (
     <div
       className={cn(
-        "sticky left-0 top-20 h-full flex-col items-center justify-between gap-8 px-2 py-4 transition-all duration-500 ease-in-out md:top-36 md:flex md:gap-16 md:px-4 md:py-8 lg:py-8",
+        "sticky left-0 top-32 h-full flex-col items-center justify-between gap-8 px-2 py-4 transition-all duration-500 ease-in-out md:top-0 md:flex md:gap-16 md:px-4 md:py-8 lg:py-8",
         isSidebarOpen ? "flex" : "hidden",
       )}
     >

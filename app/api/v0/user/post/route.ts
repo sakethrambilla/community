@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
       select: {
         id: true,
         title: true,
-        content: true,
+        body: true,
         createdAt: true,
         updatedAt: true,
         user: {
@@ -80,9 +80,10 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    console.log("Post Post body", body);
-    const { title, content, userId, categoryId } = createPostSchema.parse(body);
+    const responseBody = await req.json();
+    console.log("Post Post body", responseBody);
+    const { title, body, userId, categoryId } =
+      createPostSchema.parse(responseBody);
 
     if (!userId) {
       return NextResponse.json(
@@ -94,7 +95,7 @@ export async function POST(req: Request) {
     const post = await prisma.post.create({
       data: {
         title,
-        content,
+        body,
         user: {
           connect: { id: userId },
         },

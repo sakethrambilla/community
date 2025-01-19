@@ -5,9 +5,10 @@ import { z } from "zod";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const responseBody = await req.json();
 
-    const { title, content, userId, categoryId } = createPostSchema.parse(body);
+    const { title, body, userId, categoryId } =
+      createPostSchema.parse(responseBody);
 
     if (!userId || !categoryId) {
       return NextResponse.json(
@@ -43,7 +44,7 @@ export async function POST(req: Request) {
     const post = await prisma.post.create({
       data: {
         title,
-        content,
+        body,
         user: {
           connect: { id: userId },
         },

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { baseSchema } from "../baseSchema";
 
 const commentSchema = baseSchema.extend({
-  content: z
+  body: z
     .string()
     .min(1, { message: "Comment is required" })
     .max(50, { message: "Comment must be less than 50 characters" }),
