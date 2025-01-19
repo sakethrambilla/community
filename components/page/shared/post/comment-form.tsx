@@ -62,8 +62,11 @@ export default function CommentForm({ postId }: CommentFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex w-full">
-        <div className="flex w-full items-center justify-start">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex w-full flex-col items-start justify-center lg:flex-row lg:items-center lg:justify-start"
+      >
+        <div className="flex w-full items-center justify-start lg:flex-row">
           <Avatar className="h-8 w-8">
             <AvatarImage
               src={session?.user?.image || "https://github.com/shadcn.png"}
@@ -87,27 +90,26 @@ export default function CommentForm({ postId }: CommentFormProps) {
               </FormItem>
             )}
           />
-
-          {form.watch("body") && (
-            <div className="flex w-fit items-center justify-end gap-2">
-              {isLoading ? (
-                <Button type="submit">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                </Button>
-              ) : (
-                <Button type="submit">{"Add Comment"}</Button>
-              )}
-              <Button
-                variant={"outline"}
-                disabled={isLoading}
-                type="button"
-                onClick={() => form.reset()}
-              >
-                {"Cancel"}
-              </Button>
-            </div>
-          )}
         </div>
+        {form.watch("body") && (
+          <div className="flex w-fit items-center justify-end gap-2">
+            {isLoading ? (
+              <Button type="submit">
+                <Loader2 className="h-4 w-4 animate-spin" />
+              </Button>
+            ) : (
+              <Button type="submit">{"Add Comment"}</Button>
+            )}
+            <Button
+              variant={"outline"}
+              disabled={isLoading}
+              type="button"
+              onClick={() => form.reset()}
+            >
+              {"Cancel"}
+            </Button>
+          </div>
+        )}
       </form>
     </Form>
   );

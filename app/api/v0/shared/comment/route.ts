@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
       likes: _count.likes,
     }),
   );
-  console.dir(transformedComments, { depth: null });
+  // console.dir(transformedComments, { depth: null });
   return NextResponse.json(transformedComments);
 }
 
@@ -107,7 +107,7 @@ export async function PATCH(request: NextRequest) {
   try {
     const responseBody = await request.json();
     console.log("------- PATCH /v0/shared/comment -------");
-    console.dir(responseBody, { depth: null });
+    // console.dir(responseBody, { depth: null });
     const { id, body } = updateCommentSchema.parse(responseBody);
 
     const comment = await prisma.comment.findUnique({
