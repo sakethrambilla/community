@@ -1,5 +1,7 @@
 "use client";
 
+import ImageUpload from "@/components/common/image-upload";
+import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,7 +19,6 @@ import { useGetCourseCategoryQuery } from "@/redux/features/shared/course-catego
 import { CreateCourseSchema, createCourseSchema } from "@/schema/course";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AccessType } from "@prisma/client";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 const initialValues = {
@@ -32,14 +33,6 @@ const initialValues = {
 export default function CourseForm() {
   const { toast } = useToast();
   const { data: courseCategories } = useGetCourseCategoryQuery();
-  console.log("Course Categories", courseCategories);
-
-  useEffect(() => {
-    toast({
-      title: "Course Categories",
-      description: JSON.stringify(courseCategories),
-    });
-  }, [courseCategories]);
 
   const form = useForm<CreateCourseSchema>({
     resolver: zodResolver(createCourseSchema),
@@ -51,16 +44,15 @@ export default function CourseForm() {
   }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-4"
+      >
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
-            <Input
-              className="w-full border-none shadow-none focus-visible:ring-0"
-              placeholder="Course Title"
-              {...field}
-            />
+            <Input className="w-full" placeholder="Course Title" {...field} />
           )}
         />
 
@@ -69,80 +61,98 @@ export default function CourseForm() {
           name="description"
           render={({ field }) => (
             <Textarea
-              className="w-full border-none shadow-none focus-visible:ring-0"
+              className="min-h-40 w-full"
               placeholder="Course Description"
               {...field}
             />
           )}
         />
 
-        <div className="flex flex-wrap items-center justify-start gap-8">
-          <FormField
-            control={form.control}
-            name="categoryId"
-            render={({ field }) => (
-              <FormItem className="flex w-fit flex-wrap items-center gap-4 px-4">
-                <FormLabel>Category</FormLabel>
-                <Select onValueChange={field.onChange}>
-                  <SelectTrigger className="w-fit gap-4 px-4">
-                    <SelectValue
-                      className="text-sm lg:text-base"
-                      placeholder="Select Category"
-                    />
-                  </SelectTrigger>
-                  <SelectContent className="">
-                    {courseCategories?.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </FormItem>
-            )}
-          />
+        <div className="flex flex-row items-center justify-start gap-8">
+          <div className="flex w-1/2 flex-col gap-4">
+            <FormField
+              control={form.control}
+              name="categoryId"
+              render={({ field }) => (
+                <FormItem className="flex w-fit flex-wrap items-center gap-4 px-4">
+                  <FormLabel>Category</FormLabel>
+                  <Select onValueChange={field.onChange}>
+                    <SelectTrigger className="w-fit gap-4 px-4">
+                      <SelectValue
+                        className="text-sm lg:text-base"
+                        placeholder="Select Category"
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="">
+                      {courseCategories?.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="accessType"
+              render={({ field }) => (
+                <FormItem className="flex w-fit flex-wrap items-center gap-4 px-4">
+                  <FormLabel>Access Type</FormLabel>
+                  <Select onValueChange={field.onChange}>
+                    <SelectTrigger className="w-fit gap-4 px-4">
+                      <SelectValue
+                        className="text-sm lg:text-base"
+                        placeholder="Select Access Type"
+                      />
+                    </SelectTrigger>
+                    <SelectContent className="">
+                      {Object.values(AccessType).map((accessType) => (
+                        <SelectItem key={accessType} value={accessType}>
+                          {accessType}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="published"
+              render={({ field }) => (
+                <FormItem className="flex w-fit flex-wrap items-center gap-4 px-4">
+                  <FormLabel>Published</FormLabel>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    className={cn(
+                      "data-[state=checked]:bg-primary data-[state=unchecked]:bg-secondary",
+                    )}
+                  />
+                </FormItem>
+              )}
+            />
+          </div>
+          {/* Image Upload   */}
 
           <FormField
             control={form.control}
-            name="accessType"
+            name="coverImage"
             render={({ field }) => (
-              <FormItem className="flex w-fit flex-wrap items-center gap-4 px-4">
-                <FormLabel>Access Type</FormLabel>
-                <Select onValueChange={field.onChange}>
-                  <SelectTrigger className="w-fit gap-4 px-4">
-                    <SelectValue
-                      className="text-sm lg:text-base"
-                      placeholder="Select Access Type"
-                    />
-                  </SelectTrigger>
-                  <SelectContent className="">
-                    {Object.values(AccessType).map((accessType) => (
-                      <SelectItem key={accessType} value={accessType}>
-                        {accessType}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <FormItem className="flex w-1/2 flex-wrap items-center gap-2 px-4">
+                <FormLabel>Cover Image</FormLabel>
+                <ImageUpload onChange={field.onChange} value={field.value} />
               </FormItem>
             )}
           />
         </div>
-        <FormField
-          control={form.control}
-          name="published"
-          render={({ field }) => (
-            <FormItem className="flex w-fit flex-wrap items-center gap-4 px-4">
-              <FormLabel>Published</FormLabel>
-              <Switch
-                checked={field.value}
-                onCheckedChange={field.onChange}
-                className={cn(
-                  "data-[state=checked]:bg-primary data-[state=unchecked]:bg-secondary",
-                )}
-              />
-            </FormItem>
-          )}
-        />
+
+        <Button type="submit" className="w-fit">
+          Create Course
+        </Button>
       </form>
     </Form>
   );

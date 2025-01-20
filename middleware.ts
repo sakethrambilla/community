@@ -5,7 +5,7 @@ export default withAuth(
   function middleware(req) {
     // console.log("REQ", req.nextauth);
     if (req.nextUrl.pathname.startsWith("/admin")) {
-      console.log("Admin", req.nextauth.token);
+      // console.log("Admin", req.nextauth.token);
       if (req.nextauth.token?.role !== "ADMIN") {
         return NextResponse.redirect(new URL("/user", req.nextUrl));
       }
@@ -26,5 +26,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/admin/:path*", "/user/:path*", "/api/v0/:path*"],
+  matcher: ["/admin/:path*", "/user/:path*"],
 };
